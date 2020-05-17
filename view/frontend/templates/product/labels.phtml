@@ -1,0 +1,23 @@
+<?php
+    $helper = $this->helper('Swissup\ProLabels\Helper\Catalog');
+    $labels = $helper->getLabels($block->getCurrentProduct(), 'product');
+    if (!$labels->getLabelsData()) {
+        return;
+    }
+?>
+<script type="text/x-magento-init">
+{
+    ".column.main": {
+        "Swissup_ProLabels/js/prolabels": <?= /* @escapeNotVerified */ $helper->jsonEncode(
+            [
+                'imageLabelsTarget' => $block->getBaseImageWrapConfig(),
+                'imageLabelsWrap' => true,
+                'imageLabelsRenderAsync' => true,
+                'contentLabelsTarget' => $block->getContentWrapConfig(),
+                'labelsData' => $labels->getLabelsData(),
+                'predefinedVars' => $labels->getPredefinedVariables()
+            ]
+        ) ?>
+    }
+}
+</script>

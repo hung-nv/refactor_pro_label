@@ -1,0 +1,18 @@
+<?php
+    $isCategory = $block->getRequest()->getParam('mode') == 'category';
+    $height = $isCategory ? '30px' : '40px';
+?>
+background: <?= $block->getBackgroundColor() ?>;
+border: 1px dashed;
+box-shadow: 0 0 0 <?= $isCategory ? '2px' : '3px' ?> <?= $block->getBackgroundColor() ?>;
+color: #fff;
+font-family: 'Ubuntu', sans-serif;
+font-size: <?= $isCategory ? '12px' : '16px' ?>;
+height: <?= $height ?>;
+line-height: <?= $height ?>;
+margin: <?= $isCategory ? ' 4px' : '8px' ?>;
+padding: <?= $isCategory ? ' 0 8px' : '0 15px' ?>;
+text-align: center;
+text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+transform-origin: left top;
+transform: <?= $block->getTransform() ?: 'translateX(100%) rotate(90deg)' ?>;

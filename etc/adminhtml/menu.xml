@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Swissup_ProLabels::prolabels_labels"
+            title="ProLabels"
+            module="Swissup_ProLabels"
+            sortOrder="1668"
+            parent="Swissup_Core::general"
+            action="prolabels/label"
+            resource="Swissup_ProLabels::prolabels_labels"/>
+    </menu>
+</config>

@@ -1,0 +1,16 @@
+<?php
+    $mode = $block->getRequest()->getParam('mode');
+    $radius = $mode == 'category' ? '25' : '40';
+?>
+background-color: #d56945;
+border-radius:50%;
+border: <?= $mode == 'category' ? '1px' : '2px' ?> dashed #e9d2a3;
+box-shadow: 0 0 0 3px #d56945;
+color: #665136;
+font-family: serif;
+font-size: <?= $mode == 'category' ? '15px' : '26px' ?>;
+font-weight: 600;
+height: <?= $radius * 2 ?>px;
+margin: 4px;
+text-shadow: 1px 1px 0 #e9d2a3;
+width: <?= $radius * 2 ?>px;

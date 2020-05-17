@@ -1,0 +1,10 @@
+<?php
+    $helper = $this->helper('\Swissup\ProLabels\Helper\Catalog');
+    $product = $block->getProduct();
+    $labels = $helper->getLabels($product, 'product'); // initialize labels
+    $labelsHtml = $helper->renderContentLabels($labels);
+    if (!$labelsHtml) {
+        return;
+    }
+?>
+<?= $labelsHtml ?>

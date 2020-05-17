@@ -1,0 +1,8 @@
+<?php
+    $mode = $block->getRequest()->getParam('mode');
+    $borderWidth = $mode == 'category' ? '30px' : '40px';
+    $borderTopWidth = $mode == 'category' ? '10px' : '15px';
+?>
+<?= $this->helper(\Swissup\ProLabels\Helper\Preset::class)->getLabelText(); ?>
+
+<b style="width: 0; height: 0; border-right: <?= $borderWidth ?> solid transparent; border-left: <?= $borderWidth ?> solid transparent; border-top: <?= $borderTopWidth ?> solid <?= $block->getBackgroundColor() ?>; position: absolute; bottom: -<?= $borderTopWidth ?>; left: 0;"></b>

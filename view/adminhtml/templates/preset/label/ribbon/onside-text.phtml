@@ -1,0 +1,9 @@
+<?php
+    $labelMode = $block->getRequest()->getParam('mode');
+    $oppositeSide = $block->getSide() == 'left' ? 'right' : 'left';
+    $width = $labelMode == 'category' ? '8px' : '15px';
+    $halfHeight = $labelMode == 'category' ? '15px' : '25px';
+?>
+<?= $this->helper(\Swissup\ProLabels\Helper\Preset::class)->getLabelText(); ?>
+
+<b style="height: 0; width: 0; <?= $oppositeSide ?>: -<?= $width ?>; border-top: <?= $halfHeight ?> solid transparent; border-bottom: <?= $halfHeight ?> solid transparent; border-<?= $block->getSide() ?>: <?= $width ?> solid <?= $block->getBackgroundColor() ?>; position: absolute;"></b>

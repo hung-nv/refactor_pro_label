@@ -1,0 +1,16 @@
+<?php
+    $ampTemplate = $block->getOrigAmpTemplate();
+    $ampHtml = $block->fetchView($block->getTemplateFile($ampTemplate));
+    $product = $block->getProduct();
+    $helper = $this->helper('\Swissup\ProLabels\Helper\Catalog');
+    $labels = $helper->getLabels($product, 'product'); // initialize labels
+    $labelsHtml = $helper->renderImageLabels($labels);
+?>
+<?php if ($labelsHtml): ?>
+<div class="product-item-photo">
+    <?= $labelsHtml ?>
+    <?= $ampHtml ?>
+</div>
+<?php else: ?>
+<?= $ampHtml ?>
+<?php endif ?>

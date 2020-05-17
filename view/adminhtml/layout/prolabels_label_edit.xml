@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Swissup_ProLabels::css/prolabels-admin.css"/>
+    </head>
+    <body>
+
+        <referenceContainer name="content">
+            <!-- i do not want to add it to css file. just because i can... -->
+            <block class="Magento\Framework\View\Element\Text" name="about_us.label">
+                <arguments>
+                    <argument name="text" xsi:type="string">
+<![CDATA[
+<style>
+    .rule-tree .fieldset > .legend {
+        border: 0;
+    }
+    .rule-tree .fieldset > .legend span {
+        font-weight: normal;
+        font-size: 1.4rem;
+    }
+</style>
+]]>
+                    </argument>
+                </arguments>
+            </block>
+
+            <!-- Fix issue with file uploader on Magento 2.3 for images.  -->
+            <!-- Base64 variable is declared in prototype.js.  -->
+            <block class="Magento\Framework\View\Element\Text" name="fix.fileUploader">
+                <arguments>
+                    <argument name="text" xsi:type="string">
+<![CDATA[
+<script type="text/javascript">
+    require(['prototype'], function(){});
+</script>
+]]>
+                    </argument>
+                </arguments>
+            </block>
+
+            <uiComponent name="prolabels_label_form"/>
+
+            <referenceBlock name="prolabels_label_form">
+                <block class="Swissup\ProLabels\Block\Adminhtml\Label\IndexTab" name="index_tab" />
+            </referenceBlock>
+        </referenceContainer>
+
+        <referenceContainer name="footer">
+            <block class="Swissup\ProLabels\Block\Adminhtml\Label\Apply" name="prolabels.apply.script" template="Swissup_ProLabels::apply/label.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

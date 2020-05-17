@@ -1,0 +1,13 @@
+<?php
+    $mode = $block->getRequest()->getParam('mode');
+    $height = $mode == 'category' ? '30px' : '40px';
+?>
+background: <?= $block->getBackgroundColor() ?>;
+color: #fff;
+font-size: <?= $mode == 'category' ? '12px' : '16px' ?>;
+font-weight: 600;
+height: <?= $height ?>;
+line-height: <?= $height ?>;
+margin: 4px 18px;
+padding: <?= $mode == 'category' ? ' 0 5px' : '0 10px' ?>;
+white-space: nowrap;

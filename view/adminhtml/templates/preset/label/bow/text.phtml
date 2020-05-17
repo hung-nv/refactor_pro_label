@@ -1,0 +1,12 @@
+<?php
+    $labelMode = $block->getRequest()->getParam('mode');
+    $sideOffset = $labelMode == 'category' ? '10px' : '16px';
+    $topOffset = $labelMode == 'category' ? '5px' : '6px';
+    $bWidth = $labelMode == 'category' ? '10px' : '14px';
+    $btWidth = $labelMode == 'category' ? '4px' : '6px';
+    $bfWidth = $labelMode == 'category' ? '6px' : '10px';
+?>
+<?= $this->helper(\Swissup\ProLabels\Helper\Preset::class)->getLabelText(); ?>
+
+<b style="border: <?= $bWidth; ?> solid <?= $block->getBackgroundColor() ?>; position: absolute; left: -<?= $sideOffset ?>; border-left: <?= $btWidth; ?> solid transparent; border-right-width: <?= $bfWidth; ?>; top: <?= $topOffset; ?>;"></b>
+<b style="border: <?= $bWidth; ?> solid <?= $block->getBackgroundColor() ?>; position: absolute; right: -<?= $sideOffset ?>; border-right: <?= $btWidth; ?> solid transparent; border-left-width: <?= $bfWidth; ?>; top: <?= $topOffset; ?>;"></b>

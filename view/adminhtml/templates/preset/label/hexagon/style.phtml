@@ -1,0 +1,11 @@
+<?php
+    $isCategory = $block->getRequest()->getParam('mode') == 'category';
+?>
+--hexagon-background: linear-gradient(to bottom right, <?= $block->getBackgroundColorFrom() ?> 0%, <?= $block->getBackgroundColorTo() ?> 100%);
+--icon-color: <?= $block->getIconColor() ?>;
+--icon-size: <?= $isCategory ? '24px' : '36px' ?>;
+--ribbon-color: #fff;
+--ribbon-background: linear-gradient(to bottom right, <?= $block->getRibbonBgFrom() ?: '#555' ?> 0%, <?= $block->getRibbonBgTo() ?: '#333' ?> 100%);
+font-family: 'Comfortaa', sans-serif;
+font-size: <?= $isCategory ? '10px' : '14px' ?>;
+margin: <?= $isCategory ? '4px 16px' : '4px 26px' ?>;

@@ -1,0 +1,83 @@
+"Product Labels","Product Labels"
+"Add New Label","Add New Label"
+"Save Label","Save Label"
+"Delete Label","Delete Label"
+"Edit Label '%1'","Edit Label '%1'"
+"New Label","New Label"
+Settings,Settings
+Position,Position
+Top-Left,Top-Left
+Top-Center,Top-Center
+Top-Right,Top-Right
+Middle-Left,Middle-Left
+Middle-Center,Middle-Center
+Middle-Right,Middle-Right
+Bottom-Left,Bottom-Left
+Bottom-Center,Bottom-Center
+Bottom-Right,Bottom-Right
+Content,Content
+"Label Text","Label Text"
+"Custom Css Label","Custom Css Label"
+"Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;","Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;"
+"Label Custom Url","Label Custom Url"
+"Round Method","Round Method"
+Math,Math
+Ceil,Ceil
+Floor,Floor
+"Round Value","Round Value"
+"Labels Gallery","Labels Gallery"
+"Label Image","Label Image"
+"Category Label","Category Label"
+"Conditions (don't add conditions if label is applied to all products)","Conditions (don't add conditions if label is applied to all products)"
+"Indexed Products","Indexed Products"
+"Attribute Set","Attribute Set"
+"Product Label","Product Label"
+"Label Gallery","Label Gallery"
+"We couldn't find any labels","We couldn't find any labels"
+"Labels have been applied.","Labels have been applied."
+"Label has been applied.","Label has been applied."
+"Label was deleted.","Label was deleted."
+"Can't find a label to delete.","Can't find a label to delete."
+"Label was disabled.","Label was disabled."
+"Can't find a label to disable.","Can't find a label to disable."
+ProLabels,ProLabels
+"Manage Labels","Manage Labels"
+"This label no longer exists.","This label no longer exists."
+"Edit Label","Edit Label"
+"Label was enabled.","Label was enabled."
+"Can't find a label to enable.","Can't find a label to enable."
+"Label has been saved.","Label has been saved."
+"Something went wrong while saving the label.","Something went wrong while saving the label."
+"up to ","up to "
+Edit,Edit
+"Delete ""${ $.$data.title }""","Delete ""${ $.$data.title }"""
+"Are you sure you wan't to delete a ""${ $.$data.title }"" record?","Are you sure you wan't to delete a ""${ $.$data.title }"" record?"
+"Enable ""${ $.$data.title }""","Enable ""${ $.$data.title }"""
+"Are you sure you wan't to enable a ""${ $.$data.title }"" record?","Are you sure you wan't to enable a ""${ $.$data.title }"" record?"
+"Disable ""${ $.$data.title }""","Disable ""${ $.$data.title }"""
+"Are you sure you wan't to disable a ""${ $.$data.title }"" record?","Are you sure you wan't to disable a ""${ $.$data.title }"" record?"
+"All Store Views","All Store Views"
+"Click here or drag and drop to add images.","Click here or drag and drop to add images."
+Swissup,Swissup
+"Cron Daily Labels Reindex","Cron Daily Labels Reindex"
+"jQuery Selector For Base Image Wrapper","jQuery Selector For Base Image Wrapper"
+"jQuery Selector For Content Labels Container","jQuery Selector For Content Labels Container"
+"On Sale","On Sale"
+"SALE labels are the cost-effective way to mark store sales and attract visitors attention. They are shown on discounted and on-sale products. Using On Sale labels you catch customers attention to the promotional items.","SALE labels are the cost-effective way to mark store sales and attract visitors attention. They are shown on discounted and on-sale products. Using On Sale labels you catch customers attention to the promotional items."
+"Product Page","Product Page"
+Image,Image
+"Custom Label","Custom Label"
+"Category Page","Category Page"
+"Is New","Is New"
+"New Labels are used for the presentation of new items at your store.","New Labels are used for the presentation of new items at your store."
+"In Stock","In Stock"
+"In Stock labels are used to show low stock items. Using in stock and out of stock labels, you focus the customers attention on the limited availability of products.","In Stock labels are used to show low stock items. Using in stock and out of stock labels, you focus the customers attention on the limited availability of products."
+"Display if Stock is lower then","Display if Stock is lower then"
+"Out Of Stock","Out Of Stock"
+"Apply Labels","Apply Labels"
+"Product Image","Product Image"
+"Product Position","Product Position"
+"Product Text","Product Text"
+"Category Image","Category Image"
+"Category Position","Category Position"
+"Category Text","Category Text"

@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="prolabels" translate="label" type="text" sortOrder="1668" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>ProLabels</label>
+            <tab>swissup</tab>
+            <resource>Swissup_ProLabels::config_prolabels</resource>
+            <group id="general" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="cron" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cron Daily Labels Reindex</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+            </group>
+            <group id="on_sale" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>"On Sale" Label</label>
+                <comment>SALE labels are the cost-effective way to mark store sales and attract visitors attention. They are shown on discounted and on-sale products. Using On Sale labels you catch customers attention to the promotional items.</comment>
+                <group id="product" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\ProductLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Product\Onsale</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/product</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/product</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                    <field id="round_method" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Round Method</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\RoundMethod</source_model>
+                    </field>
+                    <field id="round_value" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Round Value</label>
+                        <comment>Example: 0.001 or 0.01 or 0.1 or 1 or 10 or 100</comment>
+                    </field>
+                </group>
+                <group id="category" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\CategoryLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Category\Onsale</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/category</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/category</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                    <field id="round_method" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Round Method</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\RoundMethod</source_model>
+                    </field>
+                    <field id="round_value" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Round Value</label>
+                        <comment>Example: 0.001 or 0.01 or 0.1 or 1 or 10 or 100</comment>
+                    </field>
+                </group>
+            </group>
+            <group id="is_new" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>"Is New" Label</label>
+                <comment>New Labels are used for the presentation of new items at your store.</comment>
+                <group id="product" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\ProductLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Product\NewLabel</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/product</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/product</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                </group>
+                <group id="category" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\CategoryLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Category\NewLabel</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/category</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/category</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                </group>
+            </group>
+            <group id="in_stock" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>"In Stock" Label</label>
+                <comment>In Stock labels are used to show low stock items. Using in stock and out of stock labels, you focus the customers attention on the limited availability of products.</comment>
+                <group id="product" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\ProductLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Product\InStock</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/product</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/product</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="stock_lower" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display if Stock is lower then</label>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                </group>
+                <group id="category" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\CategoryLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Category\InStock</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/category</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/category</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="stock_lower" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display if Stock is lower then</label>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                </group>
+            </group>
+            <group id="out_stock" translate="label comment" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>"Out Of Stock" Label</label>
+                <group id="product" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\ProductLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Product\OutStock</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/product</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/product</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                </group>
+                <group id="category" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Page</label>
+                    <fieldset_css>prolabels-preview</fieldset_css>
+                    <frontend_model>Swissup\ProLabels\Block\System\Config\Form\CategoryLabelFieldset</frontend_model>
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                    </field>
+                    <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Position</label>
+                        <source_model>Swissup\ProLabels\Model\Config\Source\Position</source_model>
+                    </field>
+                    <field id="preset" translate="label" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Select Label Preset</label>
+                        <frontend_model>Swissup\ProLabels\Block\System\Config\Form\Field\Presets\Category\OutStock</frontend_model>
+                        <comment>Use advanced options to change text, color, upload image, etc.</comment>
+                    </field>
+                    <field id="text" translate="label" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Text</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Htmlmixed</frontend_model>
+                        <comment>#attr:attribute_code# or #discount_percent# or #discount_amount# or #special_price# or #final_price# or #price# or #stock_item#</comment>
+                    </field>
+                    <field id="image" translate="label" type="image" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Image</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system/filesystem/media" scope_info="1">prolabels/category</upload_dir>
+                        <base_url type="media" scope_info="1">prolabels/category</base_url>
+                        <comment>Allowed file types: jpeg, gif, png.</comment>
+                    </field>
+                    <field id="custom" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Custom Label</label>
+                        <frontend_model>Swissup\Codemirror\Block\Adminhtml\System\Config\Form\Field\Inlinecss</frontend_model>
+                        <comment>Css Style Only. Example: color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;</comment>
+                    </field>
+                    <field id="custom_url" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Label Custom Url</label>
+                        <comment>Url Open In New Tab</comment>
+                    </field>
+                </group>
+            </group>
+            <group id="output" translate="label comment" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Storefront Output</label>
+                <comment>This config section may look very tricky. In fact it provides a ton of flexibility to integrate labels in any Magento 2 theme. You have to know what is CSS selector and how to build them and how to use.</comment>
+                <field id="base" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Product Page - image labels target</label>
+                    <comment>CSS selector of element where you want to show labels.</comment>
+                    <config_path>prolabels/general/base</config_path>
+                </field>
+                <field id="content" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Product Page - content labels target</label>
+                    <comment>CSS selector of element where you want to show labels.</comment>
+                    <config_path>prolabels/general/content</config_path>
+                </field>
+                <field id="category_item" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Category Page - list item</label>
+                    <comment>CSS selector for product list item on category page or any other listing.</comment>
+                </field>
+                <field id="category_base" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Category Page - image labels target</label>
+                    <comment>CSS selector of element after what you want to show labels. Please remember, this selector use in context of list item from config above.</comment>
+                </field>
+                <field id="category_content" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Category Page - content labels target</label>
+                    <comment>CSS selector of element after what you want to show labels. Please remember, this selector use in context of list item from config above.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

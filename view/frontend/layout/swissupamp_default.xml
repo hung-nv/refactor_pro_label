@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <body>
+        <referenceBlock name="swissupamp.styles">
+            <arguments>
+                <argument name="prolabels_styles" xsi:type="array">
+                    <item name="_required" xsi:type="string">.product-item-photo{position:relative}.prolabel{display:inline-block;background:transparent center no-repeat;line-height:normal;transition:all 0.2s;position:relative;vertical-align:top;z-index:2}.prolabel__inner{height:100%;width:100%}.prolabel__wrapper{display:table;height:100%;width:100%}.prolabel__content{display:table-cell;text-align:center;vertical-align:middle}.prolabels.content{margin:10px 0}</item>
+                    <item name="_dynamic" xsi:type="array">
+                        <item name="_prefix" xsi:type="string">.product-item-photo</item>
+                        <item name="absolute" xsi:type="string">position:absolute</item>
+                        <item name="top-left" xsi:type="string">top:0;left:0</item>
+                        <item name="top-right" xsi:type="string">top:0;right:0</item>
+                        <item name="top-center" xsi:type="string">top:0;left:50%;transform:translateX(-50%);z-index:2</item>
+                        <item name="middle-left" xsi:type="string">top:50%;left:0;transform:translateY(-50%)</item>
+                        <item name="middle-right" xsi:type="string">right:0;top:50%;transform:translateY(-50%)</item>
+                        <item name="middle-center" xsi:type="string">top:50%;left:50%;transform:translateX(-50%) translateY(-50%);z-index:2</item>
+                        <item name="bottom-left" xsi:type="string">bottom:0;left:0</item>
+                        <item name="bottom-right" xsi:type="string">bottom:0;right:0</item>
+                        <item name="bottom-center" xsi:type="string">bottom:0;left:50%;transform:translateX(-50%);z-index:2</item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</layout>

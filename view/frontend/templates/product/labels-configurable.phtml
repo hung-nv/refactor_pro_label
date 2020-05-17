@@ -1,0 +1,50 @@
+<?php
+    $superProduct = $block->getCurrentProduct();
+    $helper = $this->helper('Swissup\ProLabels\Helper\Catalog');
+    $initialConfig = [
+        'imageLabelsTarget' => $block->getBaseImageWrapConfig(),
+        'imageLabelsWrap' => true,
+        'imageLabelsRenderAsync' => true,
+        'contentLabelsTarget' => $block->getContentWrapConfig()
+    ];
+    $superlabels = $helper->getLabels($superProduct, 'product');
+    $superOptions = [];
+    if ($superlabels->getLabelsData()) {
+        $superOptions = [
+            'labelsData' => $superlabels->getLabelsData(),
+            'predefinedVars' => $superlabels->getPredefinedVariables()
+        ] + $initialConfig;
+    }
+
+    $labels = [];
+    if ($superOptions) {
+        $labels = [$superProduct->getId() => $superOptions];
+    }
+
+    $products = $superProduct->getTypeInstance()->getUsedProducts($superProduct);
+    foreach ($products as $product) {
+        $childLabels = $helper->getLabels($product, 'product');
+        if ($childLabels->getLabelsData()) {
+            $labels[$product->getId()] = [
+                'labelsData' => $childLabels->getLabelsData(),
+                'predefinedVars' => $childLabels->getPredefinedVariables()
+            ] + $initialConfig;
+        }
+    }
+
+    if (!$labels) {
+        return;
+    }
+?>
+<script type="text/x-magento-init">
+{
+    ".column.main": {
+        "Swissup_ProLabels/js/prolabels-configurable": <?= /* @escapeNotVerified */ $helper->jsonEncode([
+            'swatchOptions' => '[data-role=swatch-options]',
+            'configurableOptions' => '#product_addtocart_form .field.configurable',
+            'superProduct' => $superProduct->getId(),
+            'labels' => $labels
+        ]) ?>
+    }
+}
+</script>

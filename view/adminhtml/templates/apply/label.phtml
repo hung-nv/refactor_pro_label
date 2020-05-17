@@ -1,0 +1,88 @@
+<?php
+    $imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+    $presetsUrl = $this->getUrl(
+        'prolabels/presets',
+        [
+            'mode' => '__mode__',
+            'type' => 'manual'
+        ]
+    );
+?>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'Swissup_ProLabels/js/label-indexing',
+        'Swissup_ProLabels/js/preview',
+        'Swissup_ProLabels/js/label-presets',
+        'Magento_Ui/js/lib/view/utils/async'
+    ], function ($, LabelIndexing, PreviewLabel, Presets) {
+        'use strict';
+
+        var applyUrl = '<?= $block->getLabelIndexingUrl() ?>';
+
+        /**
+         * @param  {HTMLElement} fieldsetWrapper
+         */
+        function initPreview(fieldsetWrapper) {
+            // prepare markup
+            $(fieldsetWrapper).addClass('prolabels-preview');
+            $('.admin__fieldset', fieldsetWrapper).before(
+                '<div class="preview">' +
+                '</div>'
+            );
+
+            PreviewLabel(
+                {
+                    template: $(fieldsetWrapper).is('[data-index=category]') ?
+                        'Swissup_ProLabels/preview/category-labels' :
+                        'Swissup_ProLabels/preview/product-labels',
+                    adminControl: '.admin__field-control select[name], ' +
+                        '.admin__field-control input[name], ' +
+                        '.admin__field-control textarea[name]',
+                    controlNameFrom: 'name',
+                    imageControlUpdateStrategy: 'async',
+                    demoData: {
+                        productImage: '<?= $imageHelper->getDefaultPlaceholderUrl("image"); ?>',
+                        productName: 'Demo Product',
+                        price: 32,
+                        specialPrice: 24.99,
+                        sku: 'DEMO-PROD'
+                    }
+                },
+                fieldsetWrapper
+            );
+        }
+
+        /**
+         * @param  {HTMLElement} fieldsetWrapper
+         */
+        function initPresets(presetsElement) {
+            var url = '<?= $presetsUrl ?>',
+                mode = $(presetsElement).closest('.fieldset-wrapper').data('index');
+
+            Presets(
+                {
+                    url: url.replace('__mode__', mode)
+                },
+                presetsElement
+            );
+        }
+
+        LabelIndexing.init(applyUrl, '#apply');
+
+        $.async(
+            {
+                selector: '.fieldset-wrapper[data-index=product], ' +
+                    '.fieldset-wrapper[data-index=category]'
+            },
+            initPreview
+        );
+
+        $.async(
+            {
+                selector: '.prolabels-presets:not(.initialized)'
+            },
+            initPresets
+        );
+    });
+</script>

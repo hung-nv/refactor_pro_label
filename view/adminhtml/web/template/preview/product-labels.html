@@ -1,0 +1,76 @@
+<div class="image-placeholder prolabels-wrapper">
+    <div data-bind="css: { 'prolabels-disabled': labelsData[0].items[0].active() < 1 }">
+        <!-- ko foreach: labelsData -->
+        <!-- ko if: position() != 'content' -->
+        <div data-bind="attr: { class: position() + ( position() == 'content' ? '' : ' absolute') }, foreach: items">
+            <a data-bind="attr: { href: $data.custom_url() || null }">
+                <span class="prolabel" data-bind="attr: { style: $data.imageCss() + $data.custom() }">
+                    <span class="prolabel__inner">
+                        <span class="prolabel__wrapper">
+                            <span class="prolabel__content" data-bind="html: textProcessed"></span>
+                        </span>
+                    </span>
+                </span>
+            </a>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+    </div>
+    <img data-bind="attr: { src: labelsData[0].items[0].demoData().productImage }" />
+</div>
+
+<div class="page-title-wrapper" data-bind="with: labelsData[0].items[0]">
+    <h1 class="page-title" data-bind="{ text: demoData().productName }"></h1>
+</div>
+
+<div class="product-info-price" data-bind="with: labelsData[0].items[0]">
+    <div class="price-box price-final_price">
+        <span class="special-price">
+            <span class="price-container price-final_price tax weee">
+                <span class="price-label">Special Price</span>
+                <span data-price-type="finalPrice" class="price-wrapper">
+                    <span class="price" data-bind="{ text: '$' + demoData().specialPrice }"></span>
+                </span>
+            </span>
+        </span>
+        <span class="old-price">
+            <span class="price-container price-final_price tax weee">
+                <span class="price-label">Regular Price</span>
+                <span data-price-type="oldPrice" class="price-wrapper ">
+                    <span class="price" data-bind="{ text: '$' + demoData().price }"></span>
+                </span>
+        </span>
+    </div>
+
+    <div class="product-info-stock-sku">
+        <div class="stock available" title="Availability">
+            <span>In stock</span>
+        </div>
+        <div class="product attribute sku">
+            <strong class="type">SKU</strong>
+            <span class="value" data-bind="{ text: demoData().sku }"></span>
+        </div>
+    </div>
+</div>
+
+<div class="prolabels-content-wrapper" data-bind="css: { 'prolabels-disabled': labelsData[0].items[0].active() < 1 }">
+    <!-- ko foreach: labelsData -->
+    <!-- ko if: position() == 'content' -->
+    <div data-bind="attr: { class: position() + ( position() == 'content' ? '' : ' absolute') }, foreach: items">
+        <a data-bind="attr: { href: $data.custom_url() || null }">
+            <span class="prolabel" data-bind="attr: { style: $data.imageCss() + $data.custom() }">
+                <span class="prolabel__inner">
+                    <span class="prolabel__wrapper">
+                        <span class="prolabel__content" data-bind="html: textProcessed"></span>
+                    </span>
+                </span>
+            </span>
+        </a>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+</div>
+
+<div class="notice">
+    <p><sup>*</sup> It is just a preview. Save label and check storefront to get actual look.</p>
+</div>

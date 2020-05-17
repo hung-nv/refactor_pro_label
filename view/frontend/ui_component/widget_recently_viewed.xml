@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="widget_columns">
+        <column name="swissup_prolabel" component="Swissup_ProLabels/js/product/list/columns/prolabel" sortOrder="99" displayArea="description-area">
+            <settings>
+                <label translate="true">Swissup Prolable</label>
+                <bodyTmpl>Swissup_ProLabels/product/list/columns/prolabel</bodyTmpl>
+            </settings>
+        </column>
+    </columns>
+</listing>

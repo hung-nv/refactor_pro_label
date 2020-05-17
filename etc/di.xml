@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Swissup\ProLabels\Api\Data\LabelInterface" type="Swissup\ProLabels\Model\Label" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="prolabels_label_listing_data_source" xsi:type="string">Swissup\ProLabels\Model\ResourceModel\Label\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Swissup\ProLabels\Model\ResourceModel\Label\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">swissup_prolabels_label</argument>
+            <argument name="eventPrefix" xsi:type="string">prolabels_label_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">prolabels_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Swissup\ProLabels\Model\ResourceModel\Label</argument>
+        </arguments>
+    </type>
+    <virtualType name="ProLabelsGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="ProLabelsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Swissup\ProLabels\Model\ResourceModel\Label\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ProLabelsGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="reindexAllCommand" xsi:type="object">Swissup\ProLabels\Console\Command\ReindexAllCommand</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Swissup\ProLabels\LabelProductImageUpload" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">prolabels/tmp</argument>
+            <argument name="basePath" xsi:type="string">prolabels/product</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Swissup\ProLabels\LabelCategoryImageUpload" type="Magento\Catalog\Model\ImageUploader">
+        <arguments>
+            <argument name="baseTmpPath" xsi:type="string">prolabels/tmp</argument>
+            <argument name="basePath" xsi:type="string">prolabels/category</argument>
+            <argument name="allowedExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Swissup\ProLabels\LabelProductFileInfo" type="Swissup\Core\Model\Media\FileInfo">
+        <arguments>
+            <argument name="mediaPath" xsi:type="string">/prolabels/product</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Swissup\ProLabels\LabelCategoryFileInfo" type="Swissup\Core\Model\Media\FileInfo">
+        <arguments>
+            <argument name="mediaPath" xsi:type="string">/prolabels/category</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Swissup\ProLabels\Controller\Adminhtml\Image\Upload\Product">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Swissup\ProLabels\LabelProductImageUpload</argument>
+        </arguments>
+    </type>
+
+    <type name="Swissup\ProLabels\Controller\Adminhtml\Image\Upload\Category">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Swissup\ProLabels\LabelCategoryImageUpload</argument>
+        </arguments>
+    </type>
+
+    <type name="Swissup\ProLabels\Controller\Adminhtml\Label\Save">
+        <arguments>
+            <argument name="imageUploader" xsi:type="array">
+                <item name="product" xsi:type="object">Swissup\ProLabels\LabelProductImageUpload</item>
+                <item name="category" xsi:type="object">Swissup\ProLabels\LabelCategoryImageUpload</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Swissup\ProLabels\Ui\DataProvider\Form\LabelDataProvider">
+        <arguments>
+            <argument name="fileInfo" xsi:type="array">
+                <item name="product" xsi:type="object">Swissup\ProLabels\LabelProductFileInfo</item>
+                <item name="category" xsi:type="object">Swissup\ProLabels\LabelCategoryFileInfo</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Catalog\Ui\DataProvider\Product\ProductRenderCollectorComposite">
+        <arguments>
+            <argument name="productProviders" xsi:type="array">
+                <item name="review" xsi:type="object">Swissup\ProLabels\Ui\DataProvider\Product\Listing\Collector\Prolabel</item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>

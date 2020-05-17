@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    require([
+        'jquery',
+        'Swissup_ProLabels/js/label-indexing'
+    ], function ($, LabelIndexing) {
+        'use strict';
+
+        var applyUrl = '<?php echo $block->getAllLabelIndexingUrl() ?>';
+
+        LabelIndexing.init(applyUrl, '#apply_all');
+    });
+</script>

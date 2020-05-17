@@ -1,0 +1,15 @@
+<?php
+    $mode = $block->getRequest()->getParam('mode');
+?>
+background: linear-gradient(to bottom, <?= $block->getBackgroundColorFrom() ?> 0%, <?= $block->getBackgroundColorTo() ?> 100%);
+color: white;
+font-size: <?= $mode == 'category' ? '14px' : '20px' ?>;
+font-weight: bold;
+line-height: <?= $mode == 'category' ? '14px' : '18px' ?>;
+margin: <?= $mode == 'category' ? '0 4px 15px' : '0 8px 15px' ?>;
+padding: <?= $mode == 'category' ? '8px 0' : '14px 0 10px' ?>;
+position: relative;
+text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15);
+transform: translate3d(0, 0, 0);
+width: <?= $mode == 'category' ? '60px' : '80px' ?>;
+-webkit-filter: drop-shadow(0 0.1rem 0.1em rgba(0, 0, 0, 0.5));

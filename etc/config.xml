@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <prolabels>
+            <general>
+                <cron>1</cron>
+                <base>.fotorama__stage__frame.fotorama__active .fotorama__img</base>
+                <content>.product-info-main</content>
+            </general>
+            <output>
+                <category_item>.product-item-info</category_item>
+                <category_base>.prolabels-wrapper, .product-item-photo</category_base>
+                <category_content>.product-item-details .product-item-name</category_content>
+            </output>
+            <on_sale>
+                <product>
+                    <active>0</active>
+                    <position>top-left</position>
+                    <image></image>
+                    <custom_url></custom_url>
+                    <text>- #discount_percent#%</text>
+                    <custom>color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#ff7800; border-radius:50%;font-size: 15px;</custom>
+                    <round_method>round</round_method>
+                    <round_value>1</round_value>
+                </product>
+                <category>
+                    <active>0</active>
+                    <position>top-left</position>
+                    <image></image>
+                    <custom_url></custom_url>
+                    <text>- #discount_percent#%</text>
+                    <custom>color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 48px; height: 48px;background:#ff7800; border-radius:50%;font-size: 13px;</custom>
+                    <round_method>round</round_method>
+                    <round_value>1</round_value>
+                </category>
+            </on_sale>
+            <is_new>
+                <product>
+                    <active>0</active>
+                    <position>top-right</position>
+                    <image></image>
+                    <text>New</text>
+                    <custom>color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 60px; height: 60px;background:#1979c3; border-radius:50%;font-size: 15px;</custom>
+                    <custom_url></custom_url>
+                </product>
+                <category>
+                    <active>0</active>
+                    <position>top-right</position>
+                    <image></image>
+                    <text>New</text>
+                    <custom>color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.3); width: 48px; height: 48px;background:#1979c3; border-radius:50%;font-size: 13px;</custom>
+                    <custom_url></custom_url>
+                </category>
+            </is_new>
+            <in_stock>
+                <product>
+                    <active>0</active>
+                    <position>top-right</position>
+                    <image></image>
+                    <text></text>
+                    <custom></custom>
+                    <stock_lower>10</stock_lower>
+                    <custom_url></custom_url>
+                </product>
+                <category>
+                    <active>0</active>
+                    <position>top-right</position>
+                    <text></text>
+                    <custom></custom>
+                    <stock_lower>10</stock_lower>
+                    <custom_url></custom_url>
+                </category>
+            </in_stock>
+            <out_stock>
+                <product>
+                    <active>0</active>
+                    <position>top-right</position>
+                    <image></image>
+                    <custom_url></custom_url>
+                    <text></text>
+                    <custom></custom>
+                </product>
+                <category>
+                    <active>0</active>
+                    <position>top-right</position>
+                    <text></text>
+                     <custom_url></custom_url>
+                    <image></image>
+                    <custom></custom>
+                </category>
+            </out_stock>
+        </prolabels>
+        <swissup_amp>
+            <whitelist>
+                <layout_updates>
+                    <swissup_prolabels>Swissup_ProLabels</swissup_prolabels>
+                </layout_updates>
+            </whitelist>
+        </swissup_amp>
+    </default>
+</config>

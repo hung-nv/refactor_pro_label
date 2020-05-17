@@ -1,0 +1,12 @@
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <body>
+        <referenceBlock name="product.info.media.image" template="Swissup_ProLabels::swissupamp/product/view/gallery.phtml">
+            <arguments>
+                <argument name="orig_amp_template" xsi:type="string">Swissup_Amp::catalog/product/view/gallery.phtml</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="product.info.main">
+            <block class="Magento\Catalog\Block\Product\View\Description" name="swissup.product.contentLabels" before="product.info" template="Swissup_ProLabels::swissupamp/product/view/content-labels.phtml" />
+        </referenceContainer>
+    </body>
+</layout>

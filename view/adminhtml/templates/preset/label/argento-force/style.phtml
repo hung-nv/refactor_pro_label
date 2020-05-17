@@ -1,0 +1,20 @@
+<?php
+    $mode = $block->getRequest()->getParam('mode');
+    $colors = json_encode([
+        'default' => '#f03e3e',
+        'new' => '#91ecf0',
+        'on_sale' => '#e8e571',
+        'in_stock' => '#fe9448',
+        'out_stock' => '#d6dbe0'
+    ]);
+    $margin = $mode == 'category' ? '12px 8px 8px 12px' : '20px 16px 16px 20px';
+    $fontSize = $mode == 'category' ? '14px' : '20px';
+    $helper = $this->helper(\Swissup\ProLabels\Helper\Preset::class);
+?>
+background: <?= $helper->getValue($colors) ?>;
+box-shadow: 0px 0px 0px 2px <?= $helper->getValue($colors) ?>;
+color: #2B3945;
+font-size: <?= $fontSize ?>;
+font-family: sans-serif;
+margin: <?= $margin ?>;
+text-shadow: 1px 1px 0 rgba(255, 255, 255, .5);

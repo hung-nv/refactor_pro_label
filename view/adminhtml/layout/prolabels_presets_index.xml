@@ -1,0 +1,352 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <block class="Swissup\ProLabels\Block\Preset" name="prolabel.presets">
+            <arguments>
+                <argument name="prolabel" xsi:type="array">
+
+                    <item name="0" xsi:type="array">
+                        <item name="name" xsi:type="string">Simple round badge</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": "Label", "new": "New", "on_sale": "-#discount_percent#%", "in_stock": "#stock_item# left", "out_stock": "out of stock"}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/round/simple.phtml</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="null" />
+                    </item>
+
+                    <item name="1" xsi:type="array">
+                        <item name="name" xsi:type="string">Stripes rectangle badge</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": "Label", "new": "New", "on_sale": "-#discount_percent#%", "in_stock": "#stock_item# left", "out_stock": "out of stock"}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/rectangle/stripes.phtml</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": "top-right", "on_sale": "top-left", "in_stock": "bottom-right", "out_stock": "bottom-left"}</param>
+                        </item>
+                    </item>
+
+                    <item name="2" xsi:type="array">
+                        <item name="name" xsi:type="string">Stitched round leather badge</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": "Label", "new": "New", "on_sale": "-#discount_percent#%", "in_stock": "#stock_item# left", "out_stock": "back soon"}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/round/stitched.phtml</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="null" />
+                    </item>
+
+                    <item name="3" xsi:type="array">
+                        <item name="name" xsi:type="string">Top silver ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-text.phtml</param>
+                            <param name="encodedData">{"background_color": "#cccccc", "label_text": {"on_sale": "SAVE #discount_percent#%", "new": "NEW LOOK", "in_stock": "ONLY #stock_item# LEFT", "out_stock": "back in 3 days"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#999999", "background_color_to": "#cccccc"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="null" />
+                    </item>
+
+                    <item name="4" xsi:type="array">
+                        <item name="name" xsi:type="string">Top red ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-text.phtml</param>
+                            <param name="encodedData">{"background_color": "#e57368", "label_text": {"on_sale": "SAVE $#discount_amount#", "new": "BRAND NEW!", "in_stock": "HURRY #stock_item# LEFT", "out_stock": "back soon"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#d3362d", "background_color_to": "#e57368"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": 1, "on_sale": ".01"}</param>
+                        </item>
+                        <item name="position" xsi:type="null" />
+                    </item>
+
+                    <item name="5" xsi:type="array">
+                        <item name="name" xsi:type="string">Top green ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-text.phtml</param>
+                            <param name="encodedData"><![CDATA[{"background_color": "#65b045", "label_text": {"on_sale": "<s style=\"font-size: 16px; font-weight: normal;\">$#price#<\/s><br>\n$#final_price#", "new": "NEW!", "in_stock": "JUST #stock_item# LEFT", "out_stock": "back shortly"}}]]></param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#5f9654", "background_color_to": "#65b045"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": 1, "on_sale": ".01"}</param>
+                        </item>
+                        <item name="position" xsi:type="null" />
+                    </item>
+
+                    <item name="6" xsi:type="array">
+                        <item name="name" xsi:type="string">Top purpule ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-text.phtml</param>
+                            <param name="encodedData">{"background_color": "#7e3794", "label_text": {"on_sale": "SALE $#final_price#", "new": "FRESH LOOK", "in_stock": "#stock_item# LEFT HURRY!", "out_stock": "out of stock"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/top-style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#5c3292", "background_color_to": "#7e3794"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": 1, "on_sale": ".01"}</param>
+                        </item>
+                        <item name="position" xsi:type="null" />
+                    </item>
+
+                    <item name="7" xsi:type="array">
+                        <item name="name" xsi:type="string">Left red ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-text.phtml</param>
+                            <param name="encodedData">{"background_color": "#f8463f", "side": "left", "label_text": {"on_sale": "DISCOUNT -#discount_percent#%", "new": "JUST ARRIVED!", "in_stock": "HURRY UP! #stock_item# LEFT!", "out_stock": "BACK IN STOCK SOON"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-style.phtml</param>
+                            <param name="encodedData">{"background_color": "#f8463f", "side": "left"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="string">top-left</item>
+                    </item>
+
+                    <item name="8" xsi:type="array">
+                        <item name="name" xsi:type="string">Left blue ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-2-text.phtml</param>
+                            <param name="encodedData">{"background_color": "#00b3ed", "side": "left", "label_text": {"on_sale": "SAVE $#discount_amount#", "new": "NEW COLLECTION", "in_stock": "ONLY #stock_item# LEFT!", "out_stock": "OUT OF STOCK"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-style.phtml</param>
+                            <param name="encodedData">{"background_color": "#00b3ed", "side": "left"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": 1, "on_sale": ".01"}</param>
+                        </item>
+                        <item name="position" xsi:type="string">top-left</item>
+                    </item>
+
+                    <item name="9" xsi:type="array">
+                        <item name="name" xsi:type="string">Right purple ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-text.phtml</param>
+                            <param name="encodedData"><![CDATA[{"background_color": "#59324c", "side": "right", "label_text": {"on_sale": "DISCOUNT <b>-$#discount_amount#<\/b>", "new": "NEW ARRIVALS!", "in_stock": "HURRY, #stock_item# IN STOCK!", "out_stock": "SHORTLY OUT OF STOCK"}}]]></param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-style.phtml</param>
+                            <param name="encodedData">{"background_color": "#59324c", "side": "right"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": 1, "on_sale": ".01"}</param>
+                        </item>
+                        <item name="position" xsi:type="string">top-right</item>
+                    </item>
+
+                    <item name="10" xsi:type="array">
+                        <item name="name" xsi:type="string">Right yellow ribbon</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-2-text.phtml</param>
+                            <param name="encodedData">{"background_color": "#edba19", "side": "right", "label_text": {"on_sale": "#discount_percent#% OFF", "new": "FRESH LOOK!", "in_stock": "#stock_item# IN STOCK!", "out_stock": "BACK IN A WEEK"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/ribbon/onside-style.phtml</param>
+                            <param name="encodedData">{"background_color": "#edba19", "side": "right"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="string">top-right</item>
+                    </item>
+
+                    <item name="11" xsi:type="array">
+                        <item name="name" xsi:type="string">Center green bow</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/bow/text.phtml</param>
+                            <param name="encodedData">{"background_color": "#5c940d", "label_text": {"on_sale": "-#discount_percent#%", "new": "NEW!", "in_stock": "#stock_item# LEFT", "out_stock": "OUT"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/bow/style.phtml</param>
+                            <param name="encodedData">{"background_color": "#74b816"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="string">top-center</item>
+                    </item>
+
+                    <item name="12" xsi:type="array">
+                        <item name="name" xsi:type="string">Center red bow</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/bow/text.phtml</param>
+                            <param name="encodedData">{"background_color": "#c92a2a", "label_text": {"on_sale": "SAVE #discount_percent#%!", "new": "NEW!", "in_stock": "ONLY #stock_item# LEFT!", "out_stock": "BACK SOON"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/bow/style.phtml</param>
+                            <param name="encodedData">{"background_color": "#f03e3e"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="string">bottom-center</item>
+                    </item>
+
+                    <item name="20" xsi:type="array">
+                        <item name="name" xsi:type="string">Argento Force rectangle label with offset</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/argento-force/text.phtml</param>
+                            <param name="encodedData">{"label_text": {"on_sale": "-#discount_percent#%", "new": "NEW!", "in_stock": "ONLY #stock_item# LEFT!", "out_stock": "OUT OF STOCK"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/argento-force/style.phtml</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="300" xsi:type="array">
+                        <item name="name" xsi:type="string">Top right green stitched rotated rectangle</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": "Label", "new": "NEW COLLECTION", "on_sale": "SAVE #discount_percent#%", "in_stock": "HURRY UP, #stock_item# LEFT!", "out_stock": "OUT OF STOCK"}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/rectangle/rotated-stitched.phtml</param>
+                            <param name="encodedData">{"background_color": "#299444"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="string">top-right</item>
+                    </item>
+
+                    <item name="301" xsi:type="array">
+                        <item name="name" xsi:type="string">Bottom left mint stitched rotated rectangle</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::getValue">
+                            <param name="encodedValues">{"default": "Label", "new": "NEW ARRIVALS", "on_sale": "SAVE #discount_percent#%", "in_stock": "ONLY #stock_item# IN STOCK!", "out_stock": "TEMPORARILY OUT"}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/rectangle/rotated-stitched.phtml</param>
+                            <param name="encodedData">{"background_color": "#2fbaac", "transform": "translateY(100%) rotate(-90deg)"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="string">1</item>
+                        <item name="position" xsi:type="string">bottom-left</item>
+                    </item>
+
+                    <item name="100" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon rebels (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-rebel", "label_text": {"default": "REBELS"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#000000", "background_color_to": "#5f5f5f", "icon_color": "#d40000", "ribbon_bg_from": "#d40000", "ribbon_bg_to": "#930d0d"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="110" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon yellow express shipping (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-truck", "label_text": {"default": "EXPRESS"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#ffeb3b", "background_color_to": "#fbc02d", "icon_color": "#ffb300"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="120" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon red secure (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-shield", "label_text": {"default": "SECURE"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#f4511e", "background_color_to": "#b71c1c", "icon_color": "#c62828"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="130" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon blue community (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-users", "label_text": {"default": "COMMUNITY"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#4fc3f7", "background_color_to": "#2196f3", "icon_color": "#259af3"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="140" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon green eco (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-tree", "label_text": {"default": "ECO CLEAN"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#cddc39", "background_color_to": "#8bc34a", "icon_color": "#7cb342"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="150" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon orange university (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-graduation-cap", "label_text": {"default": "UNIVERSITY"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#ffc107", "background_color_to": "#f57c00", "icon_color": "#f68401"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="160" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon grey silver repaired (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-magic", "label_text": {"default": "REPAIRED"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#e0e0e0", "background_color_to": "#bdbdbd", "icon_color": "#9e9e9e"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                    <item name="170" xsi:type="array">
+                        <item name="name" xsi:type="string">Hexagon green gaming (Font Awesome)</item>
+                        <item name="text" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/text.phtml</param>
+                            <param name="encodedData">{"fa_icon": "fa fa-gamepad", "label_text": {"default": "GAMING"}}</param>
+                        </item>
+                        <item name="custom" xsi:type="helper" helper="Swissup\ProLabels\Helper\Preset::renderTemplate">
+                            <param name="template">preset/label/hexagon/style.phtml</param>
+                            <param name="encodedData">{"background_color_from": "#4caf50", "background_color_to": "#1b5e20", "icon_color": "#00944a"}</param>
+                        </item>
+                        <item name="round_value" xsi:type="null"/>
+                        <item name="position" xsi:type="null"/>
+                    </item>
+
+                </argument>
+            </arguments>
+        </block>
+    </body>
+</page>

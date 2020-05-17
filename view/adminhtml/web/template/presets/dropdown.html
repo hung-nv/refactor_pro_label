@@ -1,0 +1,15 @@
+<i></i>
+<input type="text" data-bind="textInput: q" placeholder="Search (one word only - red, round, stitched, etc.)">
+<div class="results">
+    <div class="prolabels-wrapper" data-bind="foreach: labels">
+        <div data-bind="if: name.toLowerCase().indexOf($root.q().toLowerCase()) !== -1, css: {'fix-rotated-top': custom.indexOf('rotate(-90') !== -1, 'fix-rotated-bottom': custom.indexOf('rotate(90') !== -1}">
+            <span class="prolabel" data-bind="attr: { style: custom, title: name, 'data-label-custom': custom, 'data-label-text': text, 'data-label-round_value': round_value, 'data-label-position': position }">
+                <span class="prolabel__inner">
+                    <span class="prolabel__wrapper">
+                        <span class="prolabel__content" data-bind="html: demoText"></span>
+                    </span>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<?php
+    $labelMode = $block->getRequest()->getParam('mode');
+    $padding = $labelMode == 'category' ? '2px 6px 0 8px' : '2px 8px 0 10px';
+    $lineHeight = $labelMode == 'category' ? '26px' : '34px';
+?>
+<b style="display: block; border: 2px solid #2B3945; padding: <?= $padding ?>; line-height: <?= $lineHeight ?>; margin: -5px 0px 0px -5px;"><?= $this->helper(\Swissup\ProLabels\Helper\Preset::class)->getLabelText(); ?></b>

@@ -1,0 +1,13 @@
+<!-- ko foreach: labelsData -->
+<div data-bind="attr: { class: position() + ( position() == 'content' ? '' : ' absolute') }, foreach: items">
+    <a data-bind="attr: { href: $data.custom_url }">
+        <span data-bind="attr: { style: $data.imageCss() + $data.custom(), class: cssClasses }">
+            <span class="prolabel__inner">
+                <span class="prolabel__wrapper">
+                    <span class="prolabel__content" data-bind="html: textProcessed"></span>
+                </span>
+            </span>
+        </span>
+    </a>
+</div>
+<!-- /ko -->
