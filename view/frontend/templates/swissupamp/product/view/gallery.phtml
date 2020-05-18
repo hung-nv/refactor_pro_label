@@ -2,7 +2,7 @@
     $ampTemplate = $block->getOrigAmpTemplate();
     $ampHtml = $block->fetchView($block->getTemplateFile($ampTemplate));
     $product = $block->getProduct();
-    $helper = $this->helper('\Swissup\ProLabels\Helper\Catalog');
+    $helper = $this->helper('\Swissup\ProLabels\Helper\CatalogHelpler');
     $labels = $helper->getLabels($product, 'product'); // initialize labels
     $labelsHtml = $helper->renderImageLabels($labels);
 ?>

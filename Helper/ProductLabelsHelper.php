@@ -2,7 +2,7 @@
 
 namespace Swissup\ProLabels\Helper;
 
-use Swissup\ProLabels\Helper\AbstractLabel;
+use Swissup\ProLabels\Helper\AbstractLabelHelper;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Pricing\Price;
@@ -10,7 +10,7 @@ use Magento\Catalog\Pricing\Price;
 /**
  * System Labels - on sale, new, in stock, out stock
  */
-class ProductLabels extends AbstractLabel
+class ProductLabelsHelper extends AbstractLabelHelper
 {
     /**
      * @return Get On Sale Label Data
@@ -49,7 +49,7 @@ class ProductLabels extends AbstractLabel
     {
         $stockConfig = $this->scopeConfig->getValue("prolabels/in_stock/{$mode}", ScopeInterface::SCOPE_STORE);
         $isAvailable = $product->isAvailable();
-        $qty = $this->getStockQty($product);
+        $qty = $this->get_stock_qty($product);
 
         if (!$stockConfig["active"]
             || !$isAvailable
@@ -90,8 +90,8 @@ class ProductLabels extends AbstractLabel
             if ((int)$product->getSpecialPrice()) {
                 $specialPriceFrom = $product->getSpecialFromDate();
                 $specialPriceTo = $product->getSpecialToDate();
-                $store = $this->_storeManager->getStore()->getId();
-                return $this->_localeDate->isScopeDateInInterval(
+                $store = $this->storeManager->getStore()->getId();
+                return $this->localeDate->isScopeDateInInterval(
                     $store,
                     $specialPriceFrom,
                     $specialPriceTo
@@ -125,7 +125,7 @@ class ProductLabels extends AbstractLabel
         $priceInfo = $product->getPriceInfo();
         $price = $priceInfo->getPrice(Price\RegularPrice::PRICE_CODE)
             ->getAmount()
-            ->getValue();;
+            ->getValue();
         if ('configurable' === $product->getTypeId()) {
             // Inspired by \Magento\Catalog\Pricing\Price\RegularPrice
             // FIX. Configurable product dosn't apply convert and round.

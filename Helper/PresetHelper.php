@@ -5,7 +5,7 @@ namespace Swissup\ProLabels\Helper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
 
-class Preset extends AbstractHelper
+class PresetHelper extends AbstractHelper
 {
     /**
      * @var \Swissup\ProLabels\Block\Preset\Template
@@ -40,7 +40,10 @@ class Preset extends AbstractHelper
             $key = array_key_exists($labelType, $values)
                 ? $labelType
                 : 'default';
-            return isset($values[$key]) ? $values[$key] : '';
+
+            $return = isset($values[$key]) ? $values[$key] : '';
+
+            return $return;
         }
 
         return $encodedValues;

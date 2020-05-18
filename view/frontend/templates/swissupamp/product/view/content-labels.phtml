@@ -1,5 +1,5 @@
 <?php
-    $helper = $this->helper('\Swissup\ProLabels\Helper\Catalog');
+    $helper = $this->helper('\Swissup\ProLabels\Helper\CatalogHelpler');
     $product = $block->getProduct();
     $labels = $helper->getLabels($product, 'product'); // initialize labels
     $labelsHtml = $helper->renderContentLabels($labels);

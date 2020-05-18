@@ -7,7 +7,7 @@
         'out_stock' => '#a9a9a9'
     ]);
     $radius = $mode == 'category' ? '23' : '30';
-    $helper = $this->helper(\Swissup\ProLabels\Helper\Preset::class);
+    $helper = $this->helper(\Swissup\ProLabels\Helper\PresetHelper::class);
 ?>
 background-color: <?= $helper->getValue($colors) ?>;
 border-radius: 50%;

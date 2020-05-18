@@ -6,7 +6,7 @@
         'in_stock' => '#4caf50',
         'out_stock' => '#a9a9a9'
     ]);
-    $helper = $this->helper(\Swissup\ProLabels\Helper\Preset::class);
+    $helper = $this->helper(\Swissup\ProLabels\Helper\PresetHelper::class);
 ?>
 background: <?= $helper->getValue($colors) ?>;
 border-radius:2px;

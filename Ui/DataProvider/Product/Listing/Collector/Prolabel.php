@@ -21,17 +21,17 @@ class Prolabel implements ProductRenderCollectorInterface
     private $productRenderExtensionFactory;
 
     /**
-     * @var \Swissup\ProLabels\Helper\Catalog
+     * @var \Swissup\ProLabels\Helper\CatalogHelpler
      */
     private $helper;
 
     /**
      * @param ProductRenderExtensionFactory     $productRenderExtensionFactory
-     * @param \Swissup\ProLabels\Helper\Catalog $helper
+     * @param \Swissup\ProLabels\Helper\CatalogHelpler $helper
      */
     public function __construct(
         ProductRenderExtensionFactory $productRenderExtensionFactory,
-        \Swissup\ProLabels\Helper\Catalog $helper
+        \Swissup\ProLabels\Helper\CatalogHelpler $helper
     ) {
         $this->productRenderExtensionFactory = $productRenderExtensionFactory;
         $this->helper = $helper;
@@ -44,7 +44,7 @@ class Prolabel implements ProductRenderCollectorInterface
         ProductInterface $product,
         ProductRenderInterface $productRender
     ) {
-        $labels = $this->helper->getLabels($product, 'category');
+        $labels = $this->helper->get_labels($product, 'category');
         if (!$labels || !$labels->getLabelsData()) {
             return;
         }

@@ -6,27 +6,27 @@ use Magento\Store\Model\ScopeInterface;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\App\ObjectManager;
 
-class Catalog extends \Magento\Framework\App\Helper\AbstractHelper
+class CatalogHelpler extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
      * @var \Swissup\ProLabels\Model\LabelsProvider
      */
-    protected $labelsProvider;
+    protected $labels_provider;
 
     /**
      * @var \Swissup\ProLabels\Model\LabelsModifier
      */
-    protected $labelsModifier;
+    protected $labels_modifier;
 
     /**
      * @var \Swissup\ProLabels\Model\Renderer\Amp
      */
-    protected $rendererAmp;
+    protected $renderer_amp;
 
     /**
      * @var \Swissup\ProLabels\Model\Config\Source\Position
      */
-    protected $positionSource;
+    protected $position_source;
 
     /**
      * @param \Swissup\ProLabels\Model\LabelsProvider         $labelsProvider
@@ -42,10 +42,10 @@ class Catalog extends \Magento\Framework\App\Helper\AbstractHelper
         \Swissup\ProLabels\Model\Config\Source\Position $positionSource,
         \Magento\Framework\App\Helper\Context $context
     ) {
-        $this->labelsProvider = $labelsProvider;
-        $this->labelsModifier = $labelsModifier;
-        $this->rendererAmp = $rendererAmp;
-        $this->positionSource = $positionSource;
+        $this->labels_provider = $labelsProvider;
+        $this->labels_modifier = $labelsModifier;
+        $this->renderer_amp = $rendererAmp;
+        $this->position_source = $positionSource;
         parent::__construct($context);
     }
 
@@ -61,28 +61,29 @@ class Catalog extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param  int $productId
+     * @param  int $product_id
+     *
      * @return string
      */
-    public function toHtmlProductLabels($productId, $mode = 'category')
+    public function toHtmlProductLabels($product_id, $instance = 'category')
     {
-        $labels = $this->labelsProvider->getLabels($productId, $mode);
+        $labels = $this->labels_provider->getLabels($product_id, $instance);
         if (!$labels || !$labels->getLabelsData()) {
             return '';
         }
 
         // When Swissup AMP enabled render labels on server side.
         // Only image labels.
-        if ($this->isSwissupAmpEnabled()) {
-            return $this->renderImageLabels($labels, $mode);
+        if ($this->is_swissup_amp_enabled()) {
+            return $this->renderImageLabels($labels, $instance);
         }
 
         // Render labels with JS. Init jquery widget.
-        $mageInit = [
+        $mage_init = [
             'Swissup_ProLabels/js/prolabels' => $this->getJsWidgetOptions($labels)
         ];
 
-        return "<div data-mage-init='{$this->jsonEncode($mageInit)}'></div>";
+        return "<div data-mage-init='{$this->jsonEncode($mage_init)}'></div>";
     }
 
     /**
@@ -144,12 +145,13 @@ class Catalog extends \Magento\Framework\App\Helper\AbstractHelper
      * Get labels for product
      *
      * @param  ProductInterface $product
-     * @param  string           $mode
+     * @param  string           $instance
+     *
      * @return \Magento\Framework\DataObject
      */
-    public function getLabels(ProductInterface $product, $mode = 'category')
+    public function get_labels(ProductInterface $product, $instance = 'category')
     {
-        return $this->labelsProvider->initialize($product, $mode);
+        return $this->labels_provider->initialize($product, $instance);
     }
 
     /**
@@ -166,18 +168,20 @@ class Catalog extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * @return boolean
      */
-    public function isSwissupAmpEnabled()
+    public function is_swissup_amp_enabled()
     {
+        $return = false;
+
         if ($this->isModuleOutputEnabled('Swissup_Amp')) {
             $helperAmp = ObjectManager::getInstance()->get(
                 '\Swissup\Amp\Helper\Data'
             );
             if ($helperAmp->canUseAmp()) {
-                return true;
+                $return = true;
             }
         }
 
-        return false;
+        return $return;
     }
 
     /**
@@ -186,9 +190,9 @@ class Catalog extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function renderImageLabels(\Magento\Framework\DataObject $labels)
     {
-        $this->labelsModifier->modify($labels);
-        $skipPositions = ['content'];
-        return $this->rendererAmp->render($labels, $skipPositions);
+        $this->labels_modifier->modify($labels);
+        $skip_positions = ['content'];
+        return $this->renderer_amp->render($labels, $skip_positions);
     }
 
     /**
@@ -197,16 +201,16 @@ class Catalog extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function renderContentLabels(\Magento\Framework\DataObject $labels)
     {
-        $this->labelsModifier->modify($labels);
-        $skipPositions = [];
-        foreach ($this->positionSource->toOptionArray() as $item) {
+        $this->labels_modifier->modify($labels);
+        $skip_positions = [];
+        foreach ($this->position_source->toOptionArray() as $item) {
             if ($item['value'] === 'content') {
                 continue;
             }
 
-            $skipPositions[] = $item['value'];
+            $skip_positions[] = $item['value'];
         }
 
-        return $this->rendererAmp->render($labels, $skipPositions);
+        return $this->renderer_amp->render($labels, $skip_positions);
     }
 }

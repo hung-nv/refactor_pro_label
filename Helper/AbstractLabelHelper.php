@@ -3,28 +3,29 @@
 namespace Swissup\ProLabels\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Swissup\ProLabels\interfaces\AbstractLabelInterface;
 
 /**
  * ProLabels Abstract Label Helper
  *
  * @author     Swissup Team <core@magentocommerce.com>
  */
-class AbstractLabel extends AbstractHelper
+class AbstractLabelHelper extends AbstractHelper implements AbstractLabelInterface
 {
     /**
      * @var \Magento\CatalogInventory\Api\StockStateInterface
      */
-    protected $_stockState;
+    protected $stockState;
 
     /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
-    protected $_localeDate;
+    protected $localeDate;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $_storeManager;
+    protected $storeManager;
 
     /**
      * @param \Magento\Framework\App\Helper\Context                $context
@@ -40,10 +41,10 @@ class AbstractLabel extends AbstractHelper
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\CatalogInventory\Api\StockStateInterface $_stockState
     ) {
-        $this->_localeDate    = $localeDate;
+        $this->localeDate    = $localeDate;
         $this->_priceCurrency = $priceCurrency;
-        $this->_storeManager  = $storeManager;
-        $this->_stockState    = $_stockState;
+        $this->storeManager  = $storeManager;
+        $this->stockState    = $_stockState;
         parent::__construct($context);
     }
 
@@ -72,35 +73,35 @@ class AbstractLabel extends AbstractHelper
      * @param  \Magento\Catalog\Model\Product $product
      * @return float
      */
-    public function getStockQty(\Magento\Catalog\Model\Product $product)
+    public function get_stock_qty(\Magento\Catalog\Model\Product $product)
     {
-        $simpleQty = [];
+        $simple_qty = [];
         if ('grouped' === $product->getTypeId()) {
-            /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $simpleProducts */
-            $childIds = $product->getTypeInstance()->getAssociatedProducts($product);
-            foreach ($childIds as $simpleProduct) {
-                $simpleQty[] = $this->_stockState->getStockQty($simpleProduct->getId());
+            /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $simple_products */
+            $child_ids = $product->getTypeInstance()->getAssociatedProducts($product);
+            foreach ($child_ids as $simple_product) {
+                $simple_qty[] = $this->stockState->getStockQty($simple_product->getId());
             }
 
-            $quantity = min($simpleQty);
+            $quantity = min($simple_qty);
         } elseif ('bundle' === $product->getTypeId()) {
-            $optionIds = $product->getTypeInstance()->getOptionsIds($product);
+            $option_ids = $product->getTypeInstance()->getOptionsIds($product);
             /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $simpleProducts */
-            $simpleProducts = $product->getTypeInstance()->getSelectionsCollection($optionIds, $product);
-            foreach ($simpleProducts as $simpleProduct) {
-                $simpleQty[] = $this->_stockState->getStockQty($simpleProduct->getId());
+            $simple_products = $product->getTypeInstance()->getSelectionsCollection($option_ids, $product);
+            foreach ($simple_products as $simple_product) {
+                $simple_qty[] = $this->stockState->getStockQty($simple_product->getId());
             }
 
-            $quantity = min($simpleQty);
+            $quantity = min($simple_qty);
         } elseif ('configurable' === $product->getTypeId()) {
-            $simpleProducts = $product->getTypeInstance()->getUsedProducts($product);
-            foreach ($simpleProducts as $simpleProduct) {
-                $simpleQty[] = $this->_stockState->getStockQty($simpleProduct->getId());
+            $simple_products = $product->getTypeInstance()->getUsedProducts($product);
+            foreach ($simple_products as $simple_product) {
+                $simple_qty[] = $this->stockState->getStockQty($simple_product->getId());
             }
 
-            $quantity = min($simpleQty);
+            $quantity = min($simple_qty);
         } else {
-            $quantity = $this->_stockState->getStockQty($product->getId());
+            $quantity = $this->stockState->getStockQty($product->getId());
         }
 
         return $quantity;
@@ -113,21 +114,24 @@ class AbstractLabel extends AbstractHelper
      */
     public function is_new_product(\Magento\Catalog\Model\Product $product)
     {
-        $store           = $this->_storeManager->getStore()->getId();
-        $specialNewsFrom = $product->getNewsFromDate();
-        $specialNewsTo   = $product->getNewsToDate();
-        if ($specialNewsFrom ||  $specialNewsTo) {
-            return $this->_localeDate->isScopeDateInInterval($store, $specialNewsFrom, $specialNewsTo);
+        $store           = $this->storeManager->getStore();
+        $id_store = $store->getId();
+        $special_news_from = $product->getNewsFromDate();
+        $special_news_to   = $product->getNewsToDate();
+        if ($special_news_from ||  $special_news_to) {
+            return $this->localeDate->isScopeDateInInterval($id_store, $special_news_from, $special_news_to);
         }
 
         return false;
     }
 
-    public function get_upload_image_label($imagePath, $mode)
+    /**
+     * {inherit}
+     */
+    public function get_upload_image_label($image_path, $instance)
     {
-        $baseMediaUrl = $this->_storeManager
-            ->getStore()
-            ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-        return $baseMediaUrl . "prolabels/{$mode}/" . $imagePath;
+        $store = $this->storeManager->getStore();
+        $base_url = $store->get∫BaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+        return $base_url . "prolabels/{$instance}/" . $image_path;
     }
 }

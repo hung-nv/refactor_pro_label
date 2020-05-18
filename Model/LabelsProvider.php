@@ -8,7 +8,7 @@ use Magento\Catalog\Model\Product;
 class LabelsProvider
 {
     /**
-     * @var \Swissup\ProLabels\Helper\ProductLabels
+     * @var \Swissup\ProLabels\Helper\ProductLabelsHelper
      */
     protected $systemLabels;
 
@@ -38,7 +38,7 @@ class LabelsProvider
     protected $dataObjectFactory;
 
     /**
-     * @param \Swissup\ProLabels\Helper\ProductLabels           $systemLabels
+     * @param \Swissup\ProLabels\Helper\ProductLabelsHelper           $systemLabels
      * @param \Swissup\ProLabels\Model\Label                    $labelModel
      * @param \Magento\Store\Model\StoreManagerInterface        $storeManager
      * @param \Magento\Customer\Model\Session                   $customerSession
@@ -47,7 +47,7 @@ class LabelsProvider
      * @param LabelsModifier                                    $modifier
      */
     public function __construct(
-        \Swissup\ProLabels\Helper\ProductLabels $systemLabels,
+        \Swissup\ProLabels\Helper\ProductLabelsHelper $systemLabels,
         \Swissup\ProLabels\Model\Label $labelModel,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Customer\Model\Session $customerSession,
@@ -410,6 +410,6 @@ class LabelsProvider
      */
     public function getStockItemValue(Product $product)
     {
-        return $this->systemLabels->getStockQty($product);
+        return $this->systemLabels->get_stock_qty($product);
     }
 }

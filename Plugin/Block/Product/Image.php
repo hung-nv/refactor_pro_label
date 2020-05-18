@@ -15,7 +15,7 @@ class Image
      * @param \Swissup\ProLabels\Helper\Data $helper
      */
     public function __construct(
-        \Swissup\ProLabels\Helper\Catalog $helper
+        \Swissup\ProLabels\Helper\CatalogHelpler $helper
     ) {
         $this->helper = $helper;
     }

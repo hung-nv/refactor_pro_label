@@ -24,7 +24,7 @@ class Labels extends Template
     protected $httpContext;
 
     /**
-     * @var \Swissup\ProLabels\Helper\ProductLabels
+     * @var \Swissup\ProLabels\Helper\ProductLabelsHelper
      */
     protected $systemLabels;
 
@@ -33,7 +33,7 @@ class Labels extends Template
      * @param \Magento\Framework\Registry             $registry
      * @param \Swissup\ProLabels\Model\Label          $labelModel
      * @param \Magento\Framework\App\Http\Context     $httpContext
-     * @param \Swissup\ProLabels\Helper\ProductLabels $systemLabels
+     * @param \Swissup\ProLabels\Helper\ProductLabelsHelper $systemLabels
      * @param array                                   $data
      */
     public function __construct(
@@ -41,7 +41,7 @@ class Labels extends Template
         \Magento\Framework\Registry $registry,
         \Swissup\ProLabels\Model\Label $labelModel,
         \Magento\Framework\App\Http\Context $httpContext,
-        \Swissup\ProLabels\Helper\ProductLabels $systemLabels,
+        \Swissup\ProLabels\Helper\ProductLabelsHelper $systemLabels,
         array $data = []
     ) {
         $this->registry = $registry;
@@ -85,7 +85,7 @@ class Labels extends Template
             implode(',', $labelIds),
             'product' => $product->getId(),
             'show_stock_label' => $canShowStockLabel
-                ? $this->systemLabels->getStockQty($product) // left in stock value
+                ? $this->systemLabels->get_stock_qty($product) // left in stock value
                 : 0                                          // stock label disabled
         ];
     }

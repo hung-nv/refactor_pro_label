@@ -9,7 +9,7 @@
     ]);
     $margin = $mode == 'category' ? '12px 8px 8px 12px' : '20px 16px 16px 20px';
     $fontSize = $mode == 'category' ? '14px' : '20px';
-    $helper = $this->helper(\Swissup\ProLabels\Helper\Preset::class);
+    $helper = $this->helper(\Swissup\ProLabels\Helper\PresetHelper::class);
 ?>
 background: <?= $helper->getValue($colors) ?>;
 box-shadow: 0px 0px 0px 2px <?= $helper->getValue($colors) ?>;
