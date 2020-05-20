@@ -10,22 +10,22 @@ class LabelsProvider
     /**
      * @var \Swissup\ProLabels\Helper\ProductLabelsHelper
      */
-    protected $systemLabels;
+    protected $system_labels;
 
     /**
      * @var \Swissup\ProLabels\Model\Label
      */
-    protected $labelModel;
+    protected $label_model;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    protected $storeManager;
+    protected $store_manager;
 
     /**
      * @var \Magento\Customer\Model\Session
      */
-    protected $customerSession;
+    protected $customer_session;
 
     /**
      * @var \Magento\Framework\DataObject
@@ -35,7 +35,7 @@ class LabelsProvider
     /**
      * @var \Magento\Framework\DataObject\Factory
      */
-    protected $dataObjectFactory;
+    protected $data_object_factory;
 
     /**
      * @param \Swissup\ProLabels\Helper\ProductLabelsHelper           $systemLabels
@@ -53,11 +53,11 @@ class LabelsProvider
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Framework\DataObject\Factory $dataObjectFactory
     ) {
-        $this->systemLabels = $systemLabels;
-        $this->labelModel = $labelModel;
-        $this->storeManager = $storeManager;
-        $this->customerSession = $customerSession;
-        $this->dataObjectFactory = $dataObjectFactory;
+        $this->system_labels = $systemLabels;
+        $this->label_model = $labelModel;
+        $this->store_manager = $storeManager;
+        $this->customer_session = $customerSession;
+        $this->data_object_factory = $dataObjectFactory;
         $this->collection = $dataObjectFactory->create();
     }
 
@@ -86,7 +86,7 @@ class LabelsProvider
             $labels = [];
             $this->initSystemLabels($labels, $product, $mode);
             $this->initManualLabels($labels, $product, $mode);
-            $labels = $this->dataObjectFactory->create(
+            $labels = $this->data_object_factory->create(
                 [
                     'labels_data' => $this->prepareLabelsData($labels, $mode),
                     'predefined_variables' => $this->preparePredefinedVariables($labels, $product)
@@ -188,19 +188,19 @@ class LabelsProvider
      */
     protected function initSystemLabels(&$labels, Product $product, $mode)
     {
-        if ($onSale = $this->systemLabels->getOnSaleLabel($product, $mode)) {
+        if ($onSale = $this->system_labels->getOnSaleLabel($product, $mode)) {
             $labels[$onSale->getPosition()][] = $onSale;
         }
 
-        if ($isNew = $this->systemLabels->getIsNewLabel($product, $mode)) {
+        if ($isNew = $this->system_labels->getIsNewLabel($product, $mode)) {
             $labels[$isNew->getPosition()][] = $isNew;
         }
 
-        if ($inStock = $this->systemLabels->getStockLabel($product, $mode)) {
+        if ($inStock = $this->system_labels->getStockLabel($product, $mode)) {
             $labels[$inStock->getPosition()][] = $inStock;
         }
 
-        if ($outOfStock = $this->systemLabels->getOutOfStockLabel($product, $mode)) {
+        if ($outOfStock = $this->system_labels->getOutOfStockLabel($product, $mode)) {
             $labels[$outOfStock->getPosition()][] = $outOfStock;
         }
 
@@ -215,17 +215,17 @@ class LabelsProvider
      */
     protected function initManualLabels(&$labels, Product $product, $mode)
     {
-        $labelIds = $this->labelModel->getProductLabels($product->getId());
+        $labelIds = $this->label_model->getProductLabels($product->getId());
         if (count($labelIds) == 0) {
             return $this;
         }
 
-        $collection = $this->labelModel
+        $collection = $this->label_model
             ->getCollection()
             ->addFieldToFilter('label_id', $labelIds)
             ->addFieldToFilter('status', 1);
-        $customerGroupId = $this->customerSession->getCustomerGroupId();
-        $storeId = $this->storeManager->getStore()->getId();
+        $customerGroupId = $this->customer_session->getCustomerGroupId();
+        $storeId = $this->store_manager->getStore()->getId();
         foreach ($collection as $label) {
             $labelStores = $label->getStoreId();
             if (!in_array('0', $labelStores)) {
@@ -243,7 +243,7 @@ class LabelsProvider
                 'round_value' => $label->getData($mode . '_round_value'),
                 'image' => $label->getData($mode . '_image')
             ];
-            $labelData = $this->systemLabels->getLabelOutputObject($labelConfig, $product, $mode);
+            $labelData = $this->system_labels->getLabelOutputObject($labelConfig, $product, $mode);
 
             if (!$labelData->getText()
                 && !$labelData->getCustom()
@@ -267,7 +267,7 @@ class LabelsProvider
      */
     public function getLabelImage($image, $mode = 'product')
     {
-        return $this->systemLabels->get_upload_image_label($image, $mode);
+        return $this->system_labels->get_upload_image_label($image, $mode);
     }
 
     /**
@@ -278,44 +278,15 @@ class LabelsProvider
      */
     protected function getGroupedProductDiscountPersent(Product $product)
     {
-        /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $simpleProducts */
-        $simpleProducts = $product
-            ->getTypeInstance()
-            ->getAssociatedProducts($product);
-        $maxResult = 0;
-        foreach ($simpleProducts as $simpleProduct) {
-            $price = $this->getPriceValue($simpleProduct);
-            $calculatedPrice = $this->getFinalPriceValue($simpleProduct);
-            $result = 100 - ($calculatedPrice * 100 / $price);
-            if ($price > $calculatedPrice) {
-                if ($result > $maxResult) {
-                    $maxResult = $result;
-                }
-            }
-        }
-
-        return $maxResult;
+        return $this->get_max_result_discount_persent($product);
     }
 
     protected function getGroupedProductDiscountAmount($product)
     {
         /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $simpleProducts */
-        $simpleProducts = $product
-            ->getTypeInstance()
-            ->getAssociatedProducts($product);
-        $maxResult = 0;
-        foreach ($simpleProducts as $simpleProduct) {
-            $price = $this->getPriceValue($simpleProduct);
-            $calculatedPrice = $this->getFinalPriceValue($simpleProduct);
-            $result = $price - $calculatedPrice;
-            if ($price > $calculatedPrice) {
-                if ($result > $maxResult) {
-                    $maxResult = $result;
-                }
-            }
-        }
+        $max_result_discount_amount = $this->get_max_result_discount_amount($product);
 
-        return $maxResult;
+        return $max_result_discount_amount;
     }
 
     /**
@@ -330,17 +301,7 @@ class LabelsProvider
      */
     public function getDiscountPercentValue(Product $product)
     {
-        if ('grouped' === $product->getTypeId()) {
-            $discountValue = $this->getGroupedProductDiscountPersent($product);
-        } elseif ('bundle' === $product->getTypeId()) {
-            $discountValue = $product->getSpecialPrice();
-        } else {
-            $finalPrice = $this->getFinalPriceValue($product);
-            $regularPrice = $this->getPriceValue($product);
-            $discountValue = (1 - $finalPrice / $regularPrice) * 100;
-        }
-
-        return $discountValue;
+        return $this->get_discount_percent_value($product);
     }
 
     /**
@@ -351,6 +312,54 @@ class LabelsProvider
      */
     public function getDiscountAmountValue(Product $product)
     {
+        return $this->get_discount_value($product);
+    }
+
+    /**
+     * #special_price# placeholder
+     *
+     * @param  Product $product
+     * @return float
+     */
+    public function getSpecialPriceValue(Product $product)
+    {
+        return $this->system_labels->getSpecialPrice($product);;
+    }
+
+    /**
+     * #price# placeholder
+     *
+     * @param  Product $product
+     * @return float
+     */
+    public function getPriceValue(Product $product)
+    {
+        return $this->system_labels->getRegularPrice($product);
+    }
+
+    /**
+     * #final_price# placeholder
+     *
+     * @param  Product $product
+     * @return float
+     */
+    public function getFinalPriceValue(Product $product)
+    {
+        return $this->system_labels->getFinalPrice($product);
+    }
+
+    /**
+     * #stock_item# placeholder
+     *
+     * @param  Product $product
+     * @return float|string
+     */
+    public function getStockItemValue(Product $product)
+    {
+        return $this->system_labels->get_stock_qty($product);
+    }
+
+    private function get_discount_value($product) {
         if ('grouped' === $product->getTypeId()) {
             $discountValue = $this->getGroupedProductDiscountAmount($product);
         } elseif ('bundle' === $product->getTypeId()) {
@@ -369,47 +378,58 @@ class LabelsProvider
         return $discountValue;
     }
 
-    /**
-     * #special_price# placeholder
-     *
-     * @param  Product $product
-     * @return float
-     */
-    public function getSpecialPriceValue(Product $product)
-    {
-        return $this->systemLabels->getSpecialPrice($product);;
+    private function get_discount_percent_value($product) {
+        if ('grouped' === $product->getTypeId()) {
+            $discountValue = $this->getGroupedProductDiscountPersent($product);
+        } elseif ('bundle' === $product->getTypeId()) {
+            $discountValue = $product->getSpecialPrice();
+        } else {
+            $finalPrice = $this->getFinalPriceValue($product);
+            $regularPrice = $this->getPriceValue($product);
+            $discountValue = (1 - $finalPrice / $regularPrice) * 100;
+        }
+
+        return $discountValue;
     }
 
-    /**
-     * #price# placeholder
-     *
-     * @param  Product $product
-     * @return float
-     */
-    public function getPriceValue(Product $product)
-    {
-        return $this->systemLabels->getRegularPrice($product);
+    private function get_max_result_discount_amount($product) {
+        $simpleProducts = $product
+            ->getTypeInstance()
+            ->getAssociatedProducts($product);
+
+        $maxResult = 0;
+
+        foreach ($simpleProducts as $simpleProduct) {
+            $price = $this->getPriceValue($simpleProduct);
+            $calculatedPrice = $this->getFinalPriceValue($simpleProduct);
+            $result = $price - $calculatedPrice;
+            if ($price > $calculatedPrice) {
+                if ($result > $maxResult) {
+                    $maxResult = $result;
+                }
+            }
+        }
+
+        return $maxResult;
     }
 
-    /**
-     * #final_price# placeholder
-     *
-     * @param  Product $product
-     * @return float
-     */
-    public function getFinalPriceValue(Product $product)
-    {
-        return $this->systemLabels->getFinalPrice($product);
-    }
+    private function get_max_result_discount_persent($product) {
+        /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $simpleProducts */
+        $simpleProducts = $product
+            ->getTypeInstance()
+            ->getAssociatedProducts($product);
+        $maxResult = 0;
+        foreach ($simpleProducts as $simpleProduct) {
+            $price = $this->getPriceValue($simpleProduct);
+            $calculatedPrice = $this->getFinalPriceValue($simpleProduct);
+            $result = 100 - ($calculatedPrice * 100 / $price);
+            if ($price > $calculatedPrice) {
+                if ($result > $maxResult) {
+                    $maxResult = $result;
+                }
+            }
+        }
 
-    /**
-     * #stock_item# placeholder
-     *
-     * @param  Product $product
-     * @return float|string
-     */
-    public function getStockItemValue(Product $product)
-    {
-        return $this->systemLabels->get_stock_qty($product);
+        return $maxResult;
     }
 }

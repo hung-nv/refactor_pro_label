@@ -14,7 +14,7 @@ class Label extends \Magento\Rule\Model\ResourceModel\AbstractResource
     /**
      * @var Configurable
      */
-    protected $resourceProductConfigurable;
+    protected $resource_product_configurable;
 
     /**
      * @param Configurable $resourceProductConfigurable
@@ -26,7 +26,7 @@ class Label extends \Magento\Rule\Model\ResourceModel\AbstractResource
         Context $context,
         $connectionName = null
     ) {
-        $this->resourceProductConfigurable = $resourceProductConfigurable;
+        $this->resource_product_configurable = $resourceProductConfigurable;
         parent::__construct($context, $connectionName);
     }
 
@@ -118,7 +118,7 @@ class Label extends \Magento\Rule\Model\ResourceModel\AbstractResource
      */
     public function validateProductSuperLink(array $ids)
     {
-        $super = $this->resourceProductConfigurable->getParentIdsByChild($ids);
+        $super = $this->resource_product_configurable->getParentIdsByChild($ids);
         return $super ?: [];
     }
 
@@ -141,28 +141,16 @@ class Label extends \Magento\Rule\Model\ResourceModel\AbstractResource
             ['label_id', 'entity_id']
         )->where('entity_id IN (?)', $productIds);
         $indexData = $connection->fetchAll($select);
-        $allLabelIds = [];
-        foreach ($indexData as $item) {
-            $allLabelIds[] = $item['label_id'];
-        }
 
-        $allLabelIds = array_unique($allLabelIds);
+        $allLabelIds = $this->set_all_label_ids($indexData);
 
         $select = $connection->select()->from(
             $this->getTable('swissup_prolabels_label')
         )->where('label_id IN (?)', $allLabelIds)
          ->where('status = ?', 1);
 
-        $labelSelectData = $connection->fetchAll($select);
+        $labelData = $this->set_label_data($select, $connection);
 
-        if (count($labelSelectData) === 0) {
-            return [];
-        }
-
-        $labelData = [];
-        foreach ($labelSelectData as $label) {
-            $labelData[$label['label_id']] = $label;
-        }
         $result = [];
         foreach ($indexData as $index) {
             if (isset($labelData[$index['label_id']])) {
@@ -181,12 +169,41 @@ class Label extends \Magento\Rule\Model\ResourceModel\AbstractResource
      */
     public function getChildrenIdsForSuperProduct($superId)
     {
-        $groups = $this->resourceProductConfigurable->getChildrenIds($superId);
+        $groups = $this->resource_product_configurable->getChildrenIds($superId);
         $ids = [];
         foreach ($groups as $children) {
             $ids = array_merge($ids, $children);
         }
 
         return array_unique($ids);
+    }
+
+    /**
+     * {inherit}
+     */
+    private function set_all_label_ids($indexData) {
+        $allLabelIds = [];
+        foreach ($indexData as $item) {
+            $allLabelIds[] = $item['label_id'];
+        }
+
+        $allLabelIds = array_unique($allLabelIds);
+
+        return $allLabelIds;
+    }
+
+    private function set_label_data($select, $connection) {
+        $labelSelectData = $connection->fetchAll($select);
+
+        if (count($labelSelectData) === 0) {
+            return [];
+        }
+
+        $labelData = [];
+        foreach ($labelSelectData as $label) {
+            $labelData[$label['label_id']] = $label;
+        }
+
+        return $labelData;
     }
 }

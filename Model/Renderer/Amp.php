@@ -67,13 +67,7 @@ class Amp
         $round_method = '',
         $round_value = 1
     ) {
-        $round_value = (float)$round_value ? (float)$round_value : 1;
-        foreach ($vars as $var => $value) {
-            $value = is_float($value) && $round_method
-                ? call_user_func($round_method, $value / $round_value)
-                : $value;
-            $html = str_replace($var, $value, $html);
-        }
+        $html = $this->set_html($vars, $html, $round_value, $round_method);
 
         return $html;
     }
@@ -92,5 +86,17 @@ class Amp
                 . "</span>"
             . "</span>"
         . "</span>";
+    }
+
+    private function set_html($vars, $html, $round_value, $round_method) {
+        $round_value = (float)$round_value ? (float)$round_value : 1;
+        foreach ($vars as $var => $value) {
+            $value = is_float($value) && $round_method
+                ? call_user_func($round_method, $value / $round_value)
+                : $value;
+            $html = str_replace($var, $value, $html);
+        }
+
+        return $html;
     }
 }

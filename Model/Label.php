@@ -156,15 +156,8 @@ class Label  extends \Magento\Rule\Model\AbstractModel implements LabelInterface
         $this->_productIds = array_unique($this->_productIds);
         $applyedProducts = $this->getIndexedProducts($this->getLabelId());
         $this->_productIds = array_diff($this->_productIds, $applyedProducts);
-        $validateData = [];
-        foreach ($this->_productIds as $productId) {
-            $validateData[] = [
-                'label_id'  => $this->getLabelId(),
-                'entity_id' => $productId
-            ];
-        }
 
-        return $validateData;
+        return $this->get_validate_data($this->_productIds);
     }
 
     public function callbackValidateProduct($args)
@@ -177,9 +170,9 @@ class Label  extends \Magento\Rule\Model\AbstractModel implements LabelInterface
             $storeIds = [$storeIds];
         }
 
-        $results = [];
         foreach ($storeIds as $storeId) {
             $product->setStoreId($storeId);
+
             if ($result = $this->getConditions()->validate($product)) {
                 $this->_productIds[] = $product->getId();
             }
@@ -194,9 +187,8 @@ class Label  extends \Magento\Rule\Model\AbstractModel implements LabelInterface
     public function prepareProductsToIndexing()
     {
         $productCollection = $this->_productCollectionFactory->create();
-        $allProductIds = $productCollection->getAllIds();
 
-        return $allProductIds;
+        return $productCollection->getAllIds();
     }
 
     public function getIndexedProducts($id)
@@ -296,11 +288,11 @@ class Label  extends \Magento\Rule\Model\AbstractModel implements LabelInterface
     public function getImageUrl($mode)
     {
         $url = false;
-        $imageName = $this->getImageName($mode);
-        if (is_string($imageName)) {
+        $image_name = $this->getImageName($mode);
+        if (is_string($image_name)) {
             $url = $this->_storeManager->getStore()->getBaseUrl(
                 \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-            ) . "prolabels/{$mode}/" . $imageName;
+            ) . "prolabels/{$mode}/" . $image_name;
         } else {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('Something went wrong while getting the image url.')
@@ -318,12 +310,12 @@ class Label  extends \Magento\Rule\Model\AbstractModel implements LabelInterface
      */
     public function getImageName($mode = 'product')
     {
-        $imageName = $this->getData($mode . '_image');
-        if (!is_string($imageName)) {
+        $image_name = $this->getData($mode . '_image');
+        if (!is_string($image_name)) {
             return '';
         }
 
-        return $imageName;
+        return $image_name;
     }
 
     /**
@@ -378,12 +370,7 @@ class Label  extends \Magento\Rule\Model\AbstractModel implements LabelInterface
      */
     public function getCustomerGroups()
     {
-        $groups = $this->getData(self::CUSTOMER_GROUPS);
-        if (is_string($groups)) {
-            $groups = $this->serializer->unserialize($groups);
-        }
-
-        return $groups;
+        return $this->set_groups_customer();
     }
 
     /**
@@ -754,5 +741,25 @@ class Label  extends \Magento\Rule\Model\AbstractModel implements LabelInterface
     public function setCategoryRoundValue($categoryRoundValue)
     {
         return $this->setData(self::CATEGORY_ROUND_VALUE, $categoryRoundValue);
+    }
+
+    private function set_groups_customer() {
+        $groups = $this->getData(self::CUSTOMER_GROUPS);
+        if (is_string($groups)) {
+            $groups = $this->serializer->unserialize($groups);
+        }
+
+        return $groups;
+    }
+
+    private function get_validate_data($productIds) {
+        $validateData = [];
+        foreach ($productIds as $productId) {
+            $validateData[] = [
+                'label_id'  => $this->getLabelId(),
+                'entity_id' => $productId
+            ];
+        }
+        return $validateData;
     }
 }

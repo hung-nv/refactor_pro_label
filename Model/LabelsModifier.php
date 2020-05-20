@@ -19,24 +19,24 @@ class LabelsModifier
     /**
      * @var \Magento\Framework\App\Helper\AbstractHelper|null
      */
-    private $imageHelper = null;
+    private $image_helper = null;
 
     /**
      * @return \Magento\Framework\App\Helper\AbstractHelper|null
      */
     private function getImageHelper()
     {
-        if (is_null($this->imageHelper)) {
+        if (is_null($this->image_helper)) {
             if (class_exists('\Swissup\Amp\Helper\Image')) {
-                $this->imageHelper = ObjectManager::getInstance()->get(
+                $this->image_helper = ObjectManager::getInstance()->get(
                     '\Swissup\Amp\Helper\Image'
                 );
             } else {
-                $this->imageHelper = false;
+                $this->image_helper = false;
             }
         }
 
-        return $this->imageHelper;
+        return $this->image_helper;
     }
 
     /**
@@ -47,40 +47,8 @@ class LabelsModifier
     public function modify(\Magento\Framework\DataObject $labels)
     {
         $labelsData = $labels->getLabelsData();
-        foreach ($labelsData as &$data) {
-            if (!isset($data['items'])) {
-                continue;
-            }
 
-            // Collect labels positions
-            if (isset($data['position'])) {
-                $this->addPosition($data['position']);
-            }
-
-            foreach ($data['items'] as &$label) {
-                $inlineCss = '';
-                // collect label CSS for class.
-                if (!empty($label['image'])) {
-                    $inlineCss .= $this->getBackgroundCss($label['image']);
-                    $label['image'] = '';
-                }
-
-                if (!empty($label['custom'])) {
-                    $inlineCss .= $label['custom'];
-                    $label['custom'] = '';
-                }
-
-                // Get class name for collected label CSS.
-                if ($inlineCss) {
-                    $label['css_class'] = $this->getCssClass($inlineCss);
-                }
-
-                // Replace inline CSS in label text with class(es).
-                if (!empty($label['text'])) {
-                    $label['text'] = $this->replaceInlineCSS($label['text']);
-                }
-            }
-        }
+        $labelsData = $this->processLabelData($labelsData);
 
         $labels->setData('labels_data', $labelsData);
     }
@@ -200,5 +168,44 @@ class LabelsModifier
                 ."width:{$helper->getWidth($image)}px;"
                 ."height:{$helper->getHeight($image)}px;"
             : '';
+    }
+
+    private function processLabelData($labelsData) {
+        foreach ($labelsData as &$data) {
+            if (!isset($data['items'])) {
+                continue;
+            }
+
+            // Collect labels positions
+            if (isset($data['position'])) {
+                $this->addPosition($data['position']);
+            }
+
+            foreach ($data['items'] as &$label) {
+                $inlineCss = '';
+                // collect label CSS for class.
+                if (!empty($label['image'])) {
+                    $inlineCss .= $this->getBackgroundCss($label['image']);
+                    $label['image'] = '';
+                }
+
+                if (!empty($label['custom'])) {
+                    $inlineCss .= $label['custom'];
+                    $label['custom'] = '';
+                }
+
+                // Get class name for collected label CSS.
+                if ($inlineCss) {
+                    $label['css_class'] = $this->getCssClass($inlineCss);
+                }
+
+                // Replace inline CSS in label text with class(es).
+                if (!empty($label['text'])) {
+                    $label['text'] = $this->replaceInlineCSS($label['text']);
+                }
+            }
+        }
+
+        return $labelsData;
     }
 }
