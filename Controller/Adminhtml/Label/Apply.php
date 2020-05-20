@@ -54,6 +54,7 @@ class Apply extends \Magento\Backend\App\Action
         $label_id = $this->getRequest()->getParam('label_id');
         $label_model = $this->label_factory->create();
         $session = $this->_session;
+
         if (!$session->hasData("swissup_labels_init")) {
             if ($label_id) {
                 $indexing_labels[] = $label_id;
@@ -88,22 +89,8 @@ class Apply extends \Magento\Backend\App\Action
         }
 
         if ($session->getData("swissup_label_new")) {
-            // prepare to reindex new label
-            $productIds = $label_model->prepareProductsToIndexing();
-            $session->setData("swissup_label_product_count", count($productIds));
-            $session->setData("swissup_label_product_apply", 0);
-            $session->setData("swissup_label_step", 0);
-            $session->setData("swissup_label_new", 0);
-
-            $percent = 100 * (int)$session->getData("swissup_label_product_apply") / (int)$session->getData("swissup_label_product_count");
-            $response_loader_text = count($session->getData("swissup_labels_success")) + 1
-                . ' of ' . count($session->getData("swissup_labels")) . ' - ' . $percent . '%';
-            $this->getResponse()->setBody(
-                $this->json_encoder->encode(array(
-                    'finished'  => false,
-                    'loaderText' => $response_loader_text
-                ))
-            );
+            // prepare to reindex
+            $this->prepare_reindex($label_model);
         } else {
             $not_applyed_label_ids = array_diff(
                 $session->getData("swissup_labels"),
@@ -137,45 +124,81 @@ class Apply extends \Magento\Backend\App\Action
                 );
             } else {
                 // finish aplly label
-                $percent = 100 * (int)$session->getData("swissup_label_product_apply") / (int)$session->getData("swissup_label_product_count");
-                $response_loader_text = count($session->getData("swissup_labels_success")) + 1
-                    . ' of ' . count($session->getData("swissup_labels")) . ' - ' . (int)$percent . '%';
-                $successLabels = $session->getData("swissup_labels_success");
-                $successLabels[] = $label_model->getId();
-                $session->setData("swissup_labels_success", $successLabels);
-                $not_applyed_label_ids = array_diff(
-                    $session->getData("swissup_labels"),
-                    $session->getData("swissup_labels_success")
-                );
-                if (count($not_applyed_label_ids) > 0) {
-                    $session->setData("swissup_label_new", 1);
-                    return $this->getResponse()->setBody(
-                        $this->json_encoder->encode(array(
-                            'finished'  => false,
-                            'loaderText' => $response_loader_text
-                        ))
-                    );
-                } else {
-                    //all labels are applyed
-                    $success_count = count($session->getData("swissup_labels_success"));
-                    $session->unsetData("swissup_labels_init");
-                    $session->unsetData("swissup_label_product_apply");
-                    $session->unsetData("swissup_labels");
-                    $session->unsetData("swissup_label_product_count");
-                    $session->unsetData("swissup_labels_success");
-                    $session->unsetData("swissup_label_step");
-                    if ($success_count > 1) {
-                        $this->messageManager->addSuccess(__('Labels have been applied.'));
-                    } else {
-                        $this->messageManager->addSuccess(__('Label has been applied.'));
-                    }
-                    return $this->getResponse()->setBody(
-                        $this->json_encoder->encode(array(
-                            'finished'  => true
-                        ))
-                    );
-                }
+                $this->finish_appy_label($label_model);
             }
+        }
+    }
+
+    /**
+     * {inherit}
+     */
+    private function prepare_reindex($label_model) {
+        // prepare to reindex new label
+        $productIds = $label_model->prepareProductsToIndexing();
+        $this->_session->setData("swissup_label_product_count", count($productIds));
+        $this->_session->setData("swissup_label_product_apply", 0);
+        $this->_session->setData("swissup_label_step", 0);
+        $this->_session->setData("swissup_label_new", 0);
+
+        $percent = 100 * (int)$this->_session->getData("swissup_label_product_apply") / (int)$this->_session->getData("swissup_label_product_count");
+        $response_loader_text = count($this->_session->getData("swissup_labels_success")) + 1
+          . ' of ' . count($this->_session->getData("swissup_labels")) . ' - ' . $percent . '%';
+        $this->getResponse()->setBody(
+          $this->json_encoder->encode(array(
+            'finished'  => false,
+            'loaderText' => $response_loader_text
+          ))
+        );
+    }
+
+    /**
+     * {inherit}
+     */
+    private function finish_appy_label($label_model) {
+        $percent = 100 * (int)$this->_session->getData("swissup_label_product_apply") / (int)$this->_session->getData("swissup_label_product_count");
+        $response_loader_text = count($this->_session->getData("swissup_labels_success")) + 1
+          . ' of ' . count($this->_session->getData("swissup_labels")) . ' - ' . (int)$percent . '%';
+        $successLabels = $this->_session->getData("swissup_labels_success");
+        $successLabels[] = $label_model->getId();
+
+        $this->_session->setData("swissup_labels_success", $successLabels);
+
+        $not_applyed_label_ids = array_diff(
+          $this->_session->getData("swissup_labels"),
+          $this->_session->getData("swissup_labels_success")
+        );
+
+        if (count($not_applyed_label_ids) > 0) {
+            $this->_session->setData("swissup_label_new", 1);
+
+            return $this->getResponse()->setBody(
+              $this->json_encoder->encode(array(
+                'finished'  => false,
+                'loaderText' => $response_loader_text
+              ))
+            );
+        } else {
+            // all labels are applyed
+            $success_count = count($this->_session->getData("swissup_labels_success"));
+
+            $this->_session->unsetData("swissup_labels_init");
+            $this->_session->unsetData("swissup_label_product_apply");
+            $this->_session->unsetData("swissup_labels");
+            $this->_session->unsetData("swissup_label_product_count");
+            $this->_session->unsetData("swissup_labels_success");
+            $this->_session->unsetData("swissup_label_step");
+
+            $this->messageManager->addSuccess(__('Label has been applied.'));
+
+            if ($success_count > 1) {
+                $this->messageManager->addSuccess(__('Labels have been applied.'));
+            }
+
+            return $this->getResponse()->setBody(
+              $this->json_encoder->encode(array(
+                'finished'  => true
+              ))
+            );
         }
     }
 }

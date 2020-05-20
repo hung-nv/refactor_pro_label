@@ -7,7 +7,7 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
     /**
      * @var \Swissup\ProLabels\Model\LabelFactory
      */
-    protected $labelFactory;
+    protected $label_factory;
 
     /**
      * @param \Swissup\ProLabels\Model\LabelFactory $labelFactory
@@ -15,7 +15,7 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
     public function __construct(
         \Swissup\ProLabels\Model\LabelFactory $labelFactory
     ) {
-        $this->labelFactory = $labelFactory;
+        $this->label_factory = $labelFactory;
     }
 
     /**
@@ -25,10 +25,11 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $product = $observer->getProduct();
+
         if (!$product) {
             return;
         }
 
-        $this->labelFactory->create()->reindex([$product->getId()]);
+        $this->label_factory->create()->reindex([$product->getId()]);
     }
 }

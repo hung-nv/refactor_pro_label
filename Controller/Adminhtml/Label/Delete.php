@@ -6,7 +6,7 @@ class Delete extends \Magento\Backend\App\Action
     /**
      * @var \Swissup\ProLabels\Model\LabelFactory
      */
-    protected $labelFactory;
+    protected $label_factory;
 
     /**
      * @param \Swissup\ProLabels\Model\LabelFactory $labelFactory
@@ -16,7 +16,7 @@ class Delete extends \Magento\Backend\App\Action
         \Swissup\ProLabels\Model\LabelFactory $labelFactory,
         \Magento\Backend\App\Action\Context $context
     ) {
-        $this->labelFactory = $labelFactory;
+        $this->label_factory = $labelFactory;
         parent::__construct($context);
     }
     /**
@@ -33,22 +33,29 @@ class Delete extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-        $resultRedirect = $this->resultRedirectFactory->create();
+        /** @var \Magento\Backend\Model\View\Result\Redirect $result_redirect */
+        $result_redirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('label_id');
+
         if ($id) {
-            try {
-                $model = $this->labelFactory->create();
-                $model->load($id);
-                $model->delete();
-                $this->messageManager->addSuccess(__('Label was deleted.'));
-                return $resultRedirect->setPath('*/*/');
-            } catch (\Exception $e) {
-                $this->messageManager->addError($e->getMessage());
-                return $resultRedirect->setPath('*/*/edit', ['label_id' => $id]);
-            }
+            return $this->run_execute($id, $result_redirect);
         }
+
         $this->messageManager->addError(__('Can\'t find a label to delete.'));
-        return $resultRedirect->setPath('*/*/');
+        
+        return $result_redirect->setPath('*/*/');
+    }
+
+    private function run_execute($id, $result_redirect) {
+        try {
+            $model = $this->label_factory->create();
+            $model->load($id);
+            $model->delete();
+            $this->messageManager->addSuccess(__('Label was deleted.'));
+            return $result_redirect->setPath('*/*/');
+        } catch (\Exception $e) {
+            $this->messageManager->addError($e->getMessage());
+            return $result_redirect->setPath('*/*/edit', ['label_id' => $id]);
+        }
     }
 }

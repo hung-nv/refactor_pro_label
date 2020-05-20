@@ -15,17 +15,17 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
     /**
      * @var ProductMetadataInterface
      */
-    private $magentoMetadata;
+    private $magento_metadata;
 
     /**
      * @var LabelResource
      */
-    private $labelResource;
+    private $label_resource;
 
     /**
      * @var AggregatedFieldDataConverter
      */
-    private $aggregatedFieldConverter;
+    private $aggregated_field_converter;
 
     /**
      * @param ProductMetadataInterface     $productMetadata
@@ -37,9 +37,9 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
         AggregatedFieldDataConverter $aggregatedFieldConverter,
         LabelResource $labelResource
     ) {
-        $this->magentoMetadata = $productMetadata;
-        $this->aggregatedFieldConverter = $aggregatedFieldConverter;
-        $this->labelResource = $labelResource;
+        $this->magento_metadata = $productMetadata;
+        $this->aggregated_field_converter = $aggregatedFieldConverter;
+        $this->label_resource = $labelResource;
     }
 
     /**
@@ -50,7 +50,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
         $setup->startSetup();
 
         if (version_compare($context->getVersion(), '1.2.0', '<')
-            && version_compare($this->magentoMetadata->getVersion(), '2.2.0', '>=')
+            && version_compare($this->magento_metadata->getVersion(), '2.2.0', '>=')
         ) {
             $this->convertSerializedDataToJson($setup);
         }
@@ -66,27 +66,29 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
      */
     public function convertSerializedDataToJson($setup)
     {
-        $this->aggregatedFieldConverter->convert(
-            [
-                new FieldToConvert(
-                    SerializedToJson::class,
-                    $this->labelResource->getMainTable(),
-                    $this->labelResource->getIdFieldName(),
-                    'conditions_serialized'
-                ),
-                new FieldToConvert(
-                    SerializedToJson::class,
-                    $this->labelResource->getMainTable(),
-                    $this->labelResource->getIdFieldName(),
-                    'store_id'
-                ),
-                new FieldToConvert(
-                    SerializedToJson::class,
-                    $this->labelResource->getMainTable(),
-                    $this->labelResource->getIdFieldName(),
-                    'customer_groups'
-                ),
-            ],
+        $dataConvert = [
+          new FieldToConvert(
+            SerializedToJson::class,
+            $this->label_resource->getMainTable(),
+            $this->label_resource->getIdFieldName(),
+            'conditions_serialized'
+          ),
+          new FieldToConvert(
+            SerializedToJson::class,
+            $this->label_resource->getMainTable(),
+            $this->label_resource->getIdFieldName(),
+            'store_id'
+          ),
+          new FieldToConvert(
+            SerializedToJson::class,
+            $this->label_resource->getMainTable(),
+            $this->label_resource->getIdFieldName(),
+            'customer_groups'
+          ),
+        ];
+
+        $this->aggregated_field_converter->convert(
+            $dataConvert,
             $setup->getConnection()
         );
     }

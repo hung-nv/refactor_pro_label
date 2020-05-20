@@ -38,39 +38,9 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
 
         parent::_construct();
 
-        if ($this->_isAllowedAction('Swissup_ProLabels::save')) {
-            $this->buttonList->update('save', 'label', __('Save Label'));
-            $this->buttonList->add(
-                'saveandcontinue',
-                [
-                    'label' => __('Save and Continue Edit'),
-                    'class' => 'save',
-                    'data_attribute' => [
-                        'mage-init' => [
-                            'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
-                        ],
-                    ]
-                ],
-                -100
-            );
-            if ($this->_coreRegistry->registry('prolabel')->getId()) {
-                $this->buttonList->add(
-                    'apply',
-                    [
-                        'class' => 'apply',
-                        'label' => __('Apply')
-                    ]
-                );
-            }
-        } else {
-            $this->buttonList->remove('save');
-        }
 
-        if ($this->_isAllowedAction('Swissup_ProLabels::delete')) {
-            $this->buttonList->update('delete', 'label', __('Delete Label'));
-        } else {
-            $this->buttonList->remove('delete');
-        }
+        // update button
+        $this->update_button();
     }
 
     /**
@@ -107,5 +77,41 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     protected function _getSaveAndContinueUrl()
     {
         return $this->getUrl('*/*/save', ['_current' => true, 'back' => 'edit', 'active_tab' => '']);
+    }
+
+    private function update_button() {
+        if ($this->_isAllowedAction('Swissup_ProLabels::save')) {
+            $this->buttonList->update('save', 'label', __('Save Label'));
+            $this->buttonList->add(
+              'saveandcontinue',
+              [
+                'label' => __('Save and Continue Edit'),
+                'class' => 'save',
+                'data_attribute' => [
+                  'mage-init' => [
+                    'button' => ['event' => 'saveAndContinueEdit', 'target' => '#edit_form'],
+                  ],
+                ]
+              ],
+              -100
+            );
+            if ($this->_coreRegistry->registry('prolabel')->getId()) {
+                $this->buttonList->add(
+                  'apply',
+                  [
+                    'class' => 'apply',
+                    'label' => __('Apply')
+                  ]
+                );
+            }
+        } else {
+            $this->buttonList->remove('save');
+        }
+
+        if ($this->_isAllowedAction('Swissup_ProLabels::delete')) {
+            $this->buttonList->update('delete', 'label', __('Delete Label'));
+        } else {
+            $this->buttonList->remove('delete');
+        }
     }
 }

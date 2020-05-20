@@ -12,7 +12,7 @@ class Conditions extends Generic implements TabInterface
     /**
      * @var \Magento\Backend\Block\Widget\Form\Renderer\Fieldset
      */
-    protected $_rendererFieldset;
+    protected $_renderer_fieldset;
 
     /**
      * @var \Magento\Rule\Block\Conditions
@@ -35,7 +35,7 @@ class Conditions extends Generic implements TabInterface
         \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset,
         array $data = []
     ) {
-        $this->_rendererFieldset = $rendererFieldset;
+        $this->_renderer_fieldset = $rendererFieldset;
         $this->_conditions = $conditions;
         parent::__construct($context, $registry, $formFactory, $data);
     }
@@ -146,37 +146,8 @@ class Conditions extends Generic implements TabInterface
 
         $conditionsFieldSetId = $model->getConditionsFieldSetId($formName);
 
-        $newChildUrl = $this->getUrl(
-            'catalog_rule/promo_catalog/newConditionHtml/form/' . $conditionsFieldSetId,
-            [
-                'form_namespace' => $formName
-            ]
-        );
-
-        $renderer = $this->_rendererFieldset->setTemplate('Magento_CatalogRule::promo/fieldset.phtml')
-            ->setNewChildUrl($newChildUrl)
-            ->setFieldSetId($conditionsFieldSetId);
-
-        $fieldset = $form->addFieldset(
-            $fieldsetId,
-            [
-                'legend' => __('Don\'t add conditions if label is applied to all products.')
-            ]
-        )->setRenderer($renderer);
-
-        $fieldset->addField(
-            'conditions',
-            'text',
-            [
-                'name' => 'conditions',
-                'label' => __('Conditions'),
-                'title' => __('Conditions'),
-                'required' => true,
-                'data-form-part' => $formName
-            ]
-        )
-            ->setRule($model)
-            ->setRenderer($this->_conditions);
+        // init form
+        $this->init_form($form, $fieldsetId, $formName, $conditionsFieldSetId, $model);
 
         $form->setValues($model->getData());
         $this->setConditionFormName($model->getConditions(), $formName, $conditionsFieldSetId);
@@ -199,5 +170,42 @@ class Conditions extends Generic implements TabInterface
                 $this->setConditionFormName($condition, $formName, $jsFormName);
             }
         }
+    }
+
+    /**
+     * {inherit}
+     */
+    private function init_form(&$form, $fieldsetId, $formName, $conditionsFieldSetId, $model) {
+        $newChildUrl = $this->getUrl(
+          'catalog_rule/promo_catalog/newConditionHtml/form/' . $conditionsFieldSetId,
+          [
+            'form_namespace' => $formName
+          ]
+        );
+
+        $renderer = $this->_renderer_fieldset->setTemplate('Magento_CatalogRule::promo/fieldset.phtml')
+          ->setNewChildUrl($newChildUrl)
+          ->setFieldSetId($conditionsFieldSetId);
+
+        $fieldset = $form->addFieldset(
+          $fieldsetId,
+          [
+            'legend' => __('Don\'t add conditions if label is applied to all products.')
+          ]
+        )->setRenderer($renderer);
+
+        $fieldset->addField(
+          'conditions',
+          'text',
+          [
+            'name' => 'conditions',
+            'label' => __('Conditions'),
+            'title' => __('Conditions'),
+            'required' => true,
+            'data-form-part' => $formName
+          ]
+        )
+          ->setRule($model)
+          ->setRenderer($this->_conditions);
     }
 }

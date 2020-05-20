@@ -6,7 +6,7 @@ class Enable extends \Magento\Backend\App\Action
     /**
      * @var \Swissup\ProLabels\Model\LabelFactory
      */
-    protected $labelFactory;
+    protected $label_factory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -16,7 +16,7 @@ class Enable extends \Magento\Backend\App\Action
         \Swissup\ProLabels\Model\LabelFactory $labelFactory,
         \Magento\Backend\App\Action\Context $context
     ) {
-        $this->labelFactory = $labelFactory;
+        $this->label_factory = $labelFactory;
         parent::__construct($context);
     }
     /**
@@ -36,26 +36,13 @@ class Enable extends \Magento\Backend\App\Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('label_id');
+
         if ($id) {
-            try {
-                $model = $this->labelFactory->create();
-                $model->load($id);
-                $model->setStatus($this->getStatusCode());
-                $model->save();
-                $this->addSuccessMessage($model);
-                return $resultRedirect->setPath('*/*/');
-            } catch (\Exception $e) {
-                $this->messageManager->addError($e->getMessage());
-                return $resultRedirect->setPath(
-                    '*/*/edit',
-                    [
-                        'label_id' => $id
-                    ]
-                );
-            }
+            return $this->run_execute($id, $resultRedirect);
         }
 
         $this->messageManager->addError(__('Can\'t find a label.'));
+
         return $resultRedirect->setPath('*/*/');
     }
 
@@ -76,5 +63,29 @@ class Enable extends \Magento\Backend\App\Action
         $this->messageManager->addSuccess(
             __('Label "%1" was enabled.', $label->getTitle())
         );
+    }
+
+    /**
+     * {inherit}
+     */
+    private function run_execute($id, $resultRedirect) {
+        try {
+            $model = $this->label_factory->create();
+            $model->load($id);
+            $model->setStatus($this->getStatusCode());
+            $model->save();
+            $this->addSuccessMessage($model);
+
+            return $resultRedirect->setPath('*/*/');
+        } catch (\Exception $e) {
+            $this->messageManager->addError($e->getMessage());
+
+            return $resultRedirect->setPath(
+              '*/*/edit',
+              [
+                'label_id' => $id
+              ]
+            );
+        }
     }
 }

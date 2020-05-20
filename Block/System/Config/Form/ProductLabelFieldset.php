@@ -9,7 +9,7 @@ class ProductLabelFieldset extends \Magento\Config\Block\System\Config\Form\Fiel
     /**
      * @var \Magento\Catalog\Helper\Image
      */
-    protected $imageHelper;
+    protected $image_helper;
 
     /**
      * @param \Magento\Catalog\Helper\Image       $imageHelper
@@ -25,7 +25,7 @@ class ProductLabelFieldset extends \Magento\Config\Block\System\Config\Form\Fiel
         \Magento\Framework\View\Helper\Js $jsHelper,
         array $data = []
     ) {
-        $this->imageHelper = $imageHelper;
+        $this->image_helper = $imageHelper;
         parent::__construct($context, $authSession, $jsHelper, $data);
     }
 
@@ -76,7 +76,7 @@ class ProductLabelFieldset extends \Magento\Config\Block\System\Config\Form\Fiel
         return [
             'Swissup_ProLabels/js/preview' => [
                 'demoData' => [
-                    'productImage' => $this->imageHelper->getDefaultPlaceholderUrl("image"),
+                    'productImage' => $this->image_helper->getDefaultPlaceholderUrl("image"),
                     'productName' => 'Demo Product',
                     'price' => 32,
                     'specialPrice' => 24.99,

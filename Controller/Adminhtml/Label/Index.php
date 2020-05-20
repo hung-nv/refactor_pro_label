@@ -11,7 +11,7 @@ class Index extends \Magento\Backend\App\Action
     /**
      * @var PageFactory
      */
-    protected $resultPageFactory;
+    protected $result_page_factory;
 
     /**
      * @param Context $context
@@ -22,7 +22,7 @@ class Index extends \Magento\Backend\App\Action
         PageFactory $resultPageFactory
     ) {
         parent::__construct($context);
-        $this->resultPageFactory = $resultPageFactory;
+        $this->result_page_factory = $resultPageFactory;
     }
 
     /**
@@ -32,8 +32,17 @@ class Index extends \Magento\Backend\App\Action
      */
     public function execute()
     {
+        $resultPage = $this->run_execute();
+
+        return $resultPage;
+    }
+
+    /**
+     * {inherit}
+     */
+    private function run_execute() {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
+        $resultPage = $this->result_page_factory->create();
         $resultPage->setActiveMenu('Swissup_ProLabels::prolabels_labels');
         $resultPage->addBreadcrumb(__('ProLabels'), __('ProLabels'));
         $resultPage->addBreadcrumb(__('Product Labels'), __('Product Labels'));

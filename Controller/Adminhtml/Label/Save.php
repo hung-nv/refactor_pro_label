@@ -10,17 +10,17 @@ class Save extends Action
      *
      * @var array
      */
-    protected $imageUploader;
+    protected $image_uploader;
 
     /**
      * @var \Magento\Framework\App\Request\DataPersistorInterface
      */
-    protected $dataPersistor;
+    protected $data_persistor;
 
     /**
      * @var \Swissup\ProLabels\Model\LabelFactory
      */
-    protected $labelFactory;
+    protected $label_factory;
 
     /**
      * @param Action\Context                                        $context
@@ -34,9 +34,9 @@ class Save extends Action
         \Swissup\ProLabels\Model\LabelFactory $labelFactory,
         $imageUploader = []
     ) {
-        $this->dataPersistor = $dataPersistor;
-        $this->labelFactory = $labelFactory;
-        $this->imageUploader = $imageUploader;
+        $this->data_persistor = $dataPersistor;
+        $this->label_factory = $labelFactory;
+        $this->image_uploader = $imageUploader;
         parent::__construct($context);
     }
 
@@ -56,12 +56,12 @@ class Save extends Action
     public function execute()
     {
         $data = $this->getRequest()->getPostValue();
-        $this->dataPersistor->set('prolabels_label', $data);
+        $this->data_persistor->set('prolabels_label', $data);
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         if ($data) {
             /** @var \Swissup\ProLabels\Model\Label $model */
-            $model = $this->labelFactory->create();
+            $model = $this->label_factory->create();
             $id = $this->getRequest()->getParam('label_id');
             if ($id) {
                 $model->load($id);
@@ -73,34 +73,22 @@ class Save extends Action
             }
 
             $model->loadPost($data);
+
             /*
              ** Label Images Upload
              */
-            foreach ($this->imageUploader as $mode => $imageUploader) {
-                $imageName = '';
-                if (isset($data["{$mode}_image"])
-                    && is_array($data["{$mode}_image"])
-                ) {
-                    $imageName = isset($data["{$mode}_image"][0]['name'])
-                        ? $data["{$mode}_image"][0]['name']
-                        : '';
-                    if (isset($data["{$mode}_image"][0]['tmp_name'])) {
-                        try {
-                            $imageUploader->moveFileFromTmp($imageName);
-                        } catch (\Exception $e) {
-                            //
-                        }
-                    }
-                }
-                $model->setData("{$mode}_image", $imageName);
-            }
+            $this->set_image($model, $data);
 
             $model->setCustomerGroups($data['customer_groups']);
+
             $model->setStoreId($data['store_id']);
+
             try {
                 $model->save();
+
                 $this->messageManager->addSuccess(__('Label has been saved.'));
-                $this->dataPersistor->clear('prolabels_label');
+                $this->data_persistor->clear('prolabels_label');
+                
                 if ($this->getRequest()->getParam('back')) {
                     return $resultRedirect->setPath(
                         '*/*/edit',
@@ -132,5 +120,29 @@ class Save extends Action
             );
         }
         return $resultRedirect->setPath('*/*/');
+    }
+
+    /**
+     * {inherit}
+     */
+    private function set_image(&$model, $data) {
+        foreach ($this->image_uploader as $mode => $imageUploader) {
+            $imageName = '';
+            if (isset($data["{$mode}_image"])
+              && is_array($data["{$mode}_image"])
+            ) {
+                $imageName = isset($data["{$mode}_image"][0]['name'])
+                  ? $data["{$mode}_image"][0]['name']
+                  : '';
+                if (isset($data["{$mode}_image"][0]['tmp_name'])) {
+                    try {
+                        $imageUploader->moveFileFromTmp($imageName);
+                    } catch (\Exception $e) {
+                        //
+                    }
+                }
+            }
+            $model->setData("{$mode}_image", $imageName);
+        }
     }
 }

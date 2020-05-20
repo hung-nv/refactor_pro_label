@@ -4,7 +4,7 @@ namespace Swissup\ProLabels\Plugin\Block\Product;
 
 class ImageBuilder
 {
-    protected $productId;
+    protected $product_id;
 
     /**
      * @param \Swissup\ProLabels\Model\LabelsProvider $labelsProvider
@@ -24,7 +24,7 @@ class ImageBuilder
         \Magento\Catalog\Block\Product\ImageBuilder $subject,
         \Magento\Catalog\Model\Product $product
     ) {
-        $this->productId = $product->getId();
+        $this->product_id = $product->getId();
         $this->labelsProvider->initialize($product, 'category');
         return null;
     }
@@ -40,13 +40,17 @@ class ImageBuilder
         \Magento\Catalog\Model\Product $product = null
     ) {
         if (!$result->hasProductId()) {
-            $result->setProductId($this->productId);
+            $result->setProductId($this->product_id);
         }
 
+        $this->init_category_by_product($product);
+
+        return $result;
+    }
+
+    private function init_category_by_product($product) {
         if ($product) {
             $this->labelsProvider->initialize($product, 'category');
         }
-
-        return $result;
     }
 }

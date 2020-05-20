@@ -79,103 +79,14 @@ class Index extends \Magento\Backend\Block\Widget\Grid\Extended
      */
     protected function _prepareColumns()
     {
-        $this->addColumn(
-            'entity_id',
-            [
-                'header' => __('ID'),
-                'sortable' => true,
-                'index' => 'entity_id',
-                'header_css_class' => 'col-id',
-                'column_css_class' => 'col-id'
-            ]
-        );
-
-        $this->addColumn(
-            'name',
-            [
-                'header' => __('Name'),
-                'index' => 'name',
-                'header_css_class' => 'col-name',
-                'column_css_class' => 'col-name'
-            ]
-        );
-
-        $this->addColumn(
-            'type',
-            [
-                'header' => __('Type'),
-                'index' => 'type_id',
-                'type' => 'options',
-                'options' => $this->productType->getOptionArray(),
-                'header_css_class' => 'col-type',
-                'column_css_class' => 'col-type'
-            ]
-        );
+        $this->add_column_before();
 
         $sets = $this->setsFactory->create()->setEntityTypeFilter(
             $this->productFactory->create()->getResource()->getTypeId()
         )->load()->toOptionHash();
 
-        $this->addColumn(
-            'set_name',
-            [
-                'header' => __('Attribute Set'),
-                'index' => 'attribute_set_id',
-                'type' => 'options',
-                'options' => $sets,
-                'header_css_class' => 'col-attr-name',
-                'column_css_class' => 'col-attr-name'
-            ]
-        );
 
-        $this->addColumn(
-            'status',
-            [
-                'header' => __('Status'),
-                'index' => 'status',
-                'type' => 'options',
-                'options' => $this->productStatus->getOptionArray(),
-                'header_css_class' => 'col-status',
-                'column_css_class' => 'col-status'
-            ]
-        );
-
-        $this->addColumn(
-            'visibility',
-            [
-                'header' => __('Visibility'),
-                'index' => 'visibility',
-                'type' => 'options',
-                'options' => $this->productVisibility->getOptionArray(),
-                'header_css_class' => 'col-visibility',
-                'column_css_class' => 'col-visibility'
-            ]
-        );
-
-        $this->addColumn(
-            'sku',
-            [
-                'header' => __('SKU'),
-                'index' => 'sku',
-                'header_css_class' => 'col-sku',
-                'column_css_class' => 'col-sku'
-            ]
-        );
-
-        $this->addColumn(
-            'price',
-            [
-                'header' => __('Price'),
-                'type' => 'currency',
-                'currency_code' => (string)$this->_scopeConfig->getValue(
-                    \Magento\Directory\Model\Currency::XML_PATH_CURRENCY_BASE,
-                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-                ),
-                'index' => 'price',
-                'header_css_class' => 'col-price',
-                'column_css_class' => 'col-price'
-            ]
-        );
+        $this->add_column_after($sets);
 
         return parent::_prepareColumns();
     }
@@ -197,5 +108,109 @@ class Index extends \Magento\Backend\Block\Widget\Grid\Extended
     public function getGridUrl()
     {
         return $this->getUrl('*/*/indexed', ['_current' => true]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function add_column_before() {
+        $this->addColumn(
+          'entity_id',
+          [
+            'header' => __('ID'),
+            'sortable' => true,
+            'index' => 'entity_id',
+            'header_css_class' => 'col-id',
+            'column_css_class' => 'col-id'
+          ]
+        );
+
+        $this->addColumn(
+          'name',
+          [
+            'header' => __('Name'),
+            'index' => 'name',
+            'header_css_class' => 'col-name',
+            'column_css_class' => 'col-name'
+          ]
+        );
+
+        $this->addColumn(
+          'type',
+          [
+            'header' => __('Type'),
+            'index' => 'type_id',
+            'type' => 'options',
+            'options' => $this->productType->getOptionArray(),
+            'header_css_class' => 'col-type',
+            'column_css_class' => 'col-type'
+          ]
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function add_column_after($sets) {
+        $this->addColumn(
+          'set_name',
+          [
+            'header' => __('Attribute Set'),
+            'index' => 'attribute_set_id',
+            'type' => 'options',
+            'options' => $sets,
+            'header_css_class' => 'col-attr-name',
+            'column_css_class' => 'col-attr-name'
+          ]
+        );
+
+        $this->addColumn(
+          'status',
+          [
+            'header' => __('Status'),
+            'index' => 'status',
+            'type' => 'options',
+            'options' => $this->productStatus->getOptionArray(),
+            'header_css_class' => 'col-status',
+            'column_css_class' => 'col-status'
+          ]
+        );
+
+        $this->addColumn(
+          'visibility',
+          [
+            'header' => __('Visibility'),
+            'index' => 'visibility',
+            'type' => 'options',
+            'options' => $this->productVisibility->getOptionArray(),
+            'header_css_class' => 'col-visibility',
+            'column_css_class' => 'col-visibility'
+          ]
+        );
+
+        $this->addColumn(
+          'sku',
+          [
+            'header' => __('SKU'),
+            'index' => 'sku',
+            'header_css_class' => 'col-sku',
+            'column_css_class' => 'col-sku'
+          ]
+        );
+
+        $this->addColumn(
+          'price',
+          [
+            'header' => __('Price'),
+            'type' => 'currency',
+            'currency_code' => (string)$this->_scopeConfig->getValue(
+              \Magento\Directory\Model\Currency::XML_PATH_CURRENCY_BASE,
+              \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            ),
+            'index' => 'price',
+            'header_css_class' => 'col-price',
+            'column_css_class' => 'col-price'
+          ]
+        );
     }
 }

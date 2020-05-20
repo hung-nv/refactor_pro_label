@@ -29,7 +29,8 @@ class Image
         \Magento\Catalog\Block\Product\Image $subject,
         $result
     ) {
-        return $result
-            . $this->helper->toHtmlProductLabels($subject->getProductId());
+        $return = $result . $this->helper->toHtmlProductLabels($subject->getProductId());
+
+        return $return;
     }
 }

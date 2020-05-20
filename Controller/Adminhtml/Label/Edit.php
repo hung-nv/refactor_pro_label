@@ -14,12 +14,12 @@ class Edit extends Action
     /**
      * @var \Swissup\ProLabels\Model\LabelFactory
      */
-    protected $labelFactory;
+    protected $label_factory;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
      */
-    protected $resultPageFactory;
+    protected $result_page_factory;
 
     /**
      * @param Action\Context                             $context
@@ -33,8 +33,8 @@ class Edit extends Action
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Registry $registry
     ) {
-        $this->labelFactory = $labelFactory;
-        $this->resultPageFactory = $resultPageFactory;
+        $this->label_factory = $labelFactory;
+        $this->result_page_factory = $resultPageFactory;
         $this->registry = $registry;
         parent::__construct($context);
     }
@@ -56,7 +56,7 @@ class Edit extends Action
     {
         // load layout, set active menu and breadcrumbs
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
+        $resultPage = $this->result_page_factory->create();
         $resultPage->setActiveMenu('Swissup_ProLabels::prolabels')
             ->addBreadcrumb(__('ProLabels'), __('ProLabels'))
             ->addBreadcrumb(__('Manage Labels'), __('Manage Labels'));
@@ -71,7 +71,7 @@ class Edit extends Action
     public function execute()
     {
         $id = $this->getRequest()->getParam('label_id');
-        $model = $this->labelFactory->create();
+        $model = $this->label_factory->create();
         if ($id) {
             $model->load($id);
             if (!$model->getId()) {
@@ -85,20 +85,29 @@ class Edit extends Action
 
         $this->registry->register('prolabel', $model);
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->_initAction();
-        $resultPage->addBreadcrumb(
-            $id ? __('Edit "%1"', $model->getTitle()) : __('New Label'),
-            $id ? __('Edit "%1"', $model->getTitle()) : __('New Label')
-        );
-        $resultPage->getConfig()->getTitle()->prepend(__('ProLabels'));
-        $resultPage->getConfig()->getTitle()
-            ->prepend(
-                $model->getId()
-                    ? __('Edit "%1"', $model->getTitle())
-                    : __('New Label')
-            );
+        $result_page = $this->set_result_page($id, $model);
 
-        return $resultPage;
+        return $result_page;
+    }
+
+    /**
+     * {inherit}
+     */
+    private function set_result_page($id, $model) {
+        /** @var \Magento\Backend\Model\View\Result\Page $result_page */
+        $result_page = $this->_initAction();
+        $result_page->addBreadcrumb(
+          $id ? __('Edit "%1"', $model->getTitle()) : __('New Label'),
+          $id ? __('Edit "%1"', $model->getTitle()) : __('New Label')
+        );
+        $result_page->getConfig()->getTitle()->prepend(__('ProLabels'));
+        $result_page->getConfig()->getTitle()
+          ->prepend(
+            $model->getId()
+              ? __('Edit "%1"', $model->getTitle())
+              : __('New Label')
+          );
+
+        return $result_page;
     }
 }

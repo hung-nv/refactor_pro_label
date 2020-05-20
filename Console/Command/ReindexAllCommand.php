@@ -17,14 +17,14 @@ class ReindexAllCommand extends Command
     /**
      * @var AppState
      */
-    protected $appState;
+    protected $app_state;
 
     /**
      * Object manager factory
      *
      * @var ObjectManagerInterface
      */
-    private $objectManager;
+    private $object_manager;
 
     /**
      * Inject dependencies
@@ -36,8 +36,8 @@ class ReindexAllCommand extends Command
         \Magento\Framework\App\State $appState
         )
     {
-        $this->objectManager = $objectManager;
-        $this->appState = $appState;
+        $this->object_manager = $objectManager;
+        $this->app_state = $appState;
         parent::__construct();
     }
 
@@ -59,10 +59,10 @@ class ReindexAllCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->appState->setAreaCode(FrontNameResolver::AREA_CODE);
+        $this->app_state->setAreaCode(FrontNameResolver::AREA_CODE);
         try {
             /** @var \Swissup\ProLabels\Model\Reindex $reindex */
-            $reindex = $this->objectManager->create(
+            $reindex = $this->object_manager->create(
                 'Swissup\ProLabels\Model\Reindex',
                 [
                     'input' => $input,

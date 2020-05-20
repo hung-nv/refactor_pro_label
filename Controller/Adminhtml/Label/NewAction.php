@@ -6,7 +6,7 @@ class NewAction extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Backend\Model\View\Result\Forward
      */
-    protected $resultForwardFactory;
+    protected $result_forward_factory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -16,7 +16,7 @@ class NewAction extends \Magento\Backend\App\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory
     ) {
-        $this->resultForwardFactory = $resultForwardFactory;
+        $this->result_forward_factory = $resultForwardFactory;
         parent::__construct($context);
     }
 
@@ -35,9 +35,9 @@ class NewAction extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Forward $resultForward */
-        $resultForward = $this->resultForwardFactory->create();
+        /** @var \Magento\Backend\Model\View\Result\Forward $result_forward */
+        $result_forward = $this->result_forward_factory->create();
 
-        return $resultForward->forward('edit');
+        return $result_forward->forward('edit');
     }
 }

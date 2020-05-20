@@ -7,7 +7,7 @@ class Indexed extends \Magento\Backend\App\Action
     /**
      * @var \Magento\Framework\View\Result\LayoutFactory
      */
-    protected $resultLayoutFactory;
+    protected $result_layout_factory;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -18,7 +18,7 @@ class Indexed extends \Magento\Backend\App\Action
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory
     ) {
         parent::__construct($context);
-        $this->resultLayoutFactory = $resultLayoutFactory;
+        $this->result_layout_factory = $resultLayoutFactory;
     }
 
     /**
@@ -26,6 +26,6 @@ class Indexed extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        return $this->resultLayoutFactory->create();
+        return $this->result_layout_factory->create();
     }
 }

@@ -21,22 +21,36 @@ class ScssAfterCompile implements \Magento\Framework\Event\ObserverInterface
     {
         $prolabelsStyles = $this->labelsModifier->getCollectedStyles();
         $positions = $this->labelsModifier->getCollectedPositions();
+
         if (!$prolabelsStyles && !$positions) {
             return;
         }
 
-        $block = $observer->getBlock();
         $transport = $observer->getTransport();
+
+        $styles = $this->set_style($observer, $positions, $transport);
+
+        $styles .= $prolabelsStyles;
+
+        $transport->setStyles($styles);
+    }
+
+    /**
+     * {inherit}
+     */
+    private function set_style($observer, $positions, $transport) {
+        $block = $observer->getBlock();
+
         $styles = $transport->getStyles();
         $styles .= $block->getData('prolabels_styles/_required');
         $classes = array_merge(['absolute'], $positions);
+
         foreach ($classes as $class) {
             $styles .= $block->getData('prolabels_styles/_dynamic/_prefix') . ' '
-                . '.' . $class
-                . '{' . $block->getData("prolabels_styles/_dynamic/{$class}") . '}';
+              . '.' . $class
+              . '{' . $block->getData("prolabels_styles/_dynamic/{$class}") . '}';
         }
 
-        $styles .= $prolabelsStyles;
-        $transport->setStyles($styles);
+        return $styles;
     }
 }

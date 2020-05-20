@@ -11,7 +11,7 @@ class Labels extends Template
     /**
      * @var \Swissup\ProLabels\Model\Label
      */
-    protected $labelModel;
+    protected $label_model;
 
     /**
      * @var \Magento\Framework\Registry
@@ -21,12 +21,12 @@ class Labels extends Template
     /**
      * @var \Magento\Framework\App\Http\Context
      */
-    protected $httpContext;
+    protected $http_context;
 
     /**
      * @var \Swissup\ProLabels\Helper\ProductLabelsHelper
      */
-    protected $systemLabels;
+    protected $system_labels;
 
     /**
      * @param Template\Context                        $context
@@ -45,9 +45,9 @@ class Labels extends Template
         array $data = []
     ) {
         $this->registry = $registry;
-        $this->labelModel = $labelModel;
-        $this->httpContext = $httpContext;
-        $this->systemLabels = $systemLabels;
+        $this->label_model = $labelModel;
+        $this->http_context = $httpContext;
+        $this->system_labels = $systemLabels;
         parent::__construct($context, $data);
     }
 
@@ -74,18 +74,20 @@ class Labels extends Template
     public function getCacheKeyInfo()
     {
         $product = $this->getCurrentProduct();
-        $labelIds = $this->labelModel->getProductLabels($product->getId());
-        $canShowStockLabel = (bool)$this->systemLabels->getStockLabel($product, 'product');
+        $label_ids = $this->label_model->getProductLabels($product->getId());
+
+        $can_show_stock_label = (bool)$this->system_labels->getStockLabel($product, 'product');
+
         return [
             'PROLABELS_LABELS',
             $this->_storeManager->getStore()->getId(),
-            $this->httpContext->getValue(Context::CONTEXT_GROUP),
+            $this->http_context->getValue(Context::CONTEXT_GROUP),
             'template' => $this->getTemplate(),
             'name' => $this->getNameInLayout(),
-            implode(',', $labelIds),
+            implode(',', $label_ids),
             'product' => $product->getId(),
-            'show_stock_label' => $canShowStockLabel
-                ? $this->systemLabels->get_stock_qty($product) // left in stock value
+            'show_stock_label' => $can_show_stock_label
+                ? $this->system_labels->get_stock_qty($product) // left in stock value
                 : 0                                          // stock label disabled
         ];
     }

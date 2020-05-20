@@ -33,41 +33,57 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
         if (version_compare($context->getVersion(), '1.1.0', '<')) {
             // drop unused columns
-            $columnNames = [
-                'product_image_width',
-                'product_image_height',
-                'category_image_width',
-                'category_image_height'
-            ];
-            foreach ($columnNames as $columnName) {
-                $setup->getConnection()->dropColumn(
-                    $setup->getTable('swissup_prolabels_label'),
-                    $columnName
-                );
-            }
+            $this->drop_column_unused($setup);
 
             // extend column length
-            $columnNames = [
-                'product_image' => 'Product Image',
-                'product_custom_style' => 'Product Custom Style',
-                'product_text' => 'Product Text',
-                'category_image' => 'Category Image',
-                'category_custom_style' => 'Category Custom Style',
-                'category_text' => 'Category Text'
-            ];
-            foreach ($columnNames as $columnName => $columnTitle) {
-                $setup->getConnection()->modifyColumn(
-                    $setup->getTable('swissup_prolabels_label'),
-                    $columnName,
-                    [
-                        'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                        'nullable' => false,
-                        'comment' => $columnTitle
-                    ]
-                );
-            }
+            $this->extend_column_length($setup);
         }
 
         $setup->endSetup();
+    }
+
+    /**
+     * {inherit}
+     */
+    private function drop_column_unused(&$setup) {
+        $columnNames = [
+          'product_image_width',
+          'product_image_height',
+          'category_image_width',
+          'category_image_height'
+        ];
+
+        foreach ($columnNames as $columnName) {
+            $setup->getConnection()->dropColumn(
+              $setup->getTable('swissup_prolabels_label'),
+              $columnName
+            );
+        }
+    }
+
+    /**
+     * {inherit}
+     */
+    private function extend_column_length(&$setup) {
+        $columnNames = [
+          'product_image' => 'Product Image',
+          'product_custom_style' => 'Product Custom Style',
+          'product_text' => 'Product Text',
+          'category_image' => 'Category Image',
+          'category_custom_style' => 'Category Custom Style',
+          'category_text' => 'Category Text'
+        ];
+
+        foreach ($columnNames as $columnName => $columnTitle) {
+            $setup->getConnection()->modifyColumn(
+              $setup->getTable('swissup_prolabels_label'),
+              $columnName,
+              [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'nullable' => false,
+                'comment' => $columnTitle
+              ]
+            );
+        }
     }
 }
